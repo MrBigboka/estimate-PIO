@@ -1,0 +1,221 @@
+"use client";
+
+import {
+  Brain,
+  Users,
+  Trophy,
+  Clock,
+  DollarSign,
+  Code,
+  TrendingUp,
+  ArrowRight,
+} from "lucide-react";
+import { OrbitingCircles } from "@/components/magicui/orbiting-circles";
+import Image from "next/image";
+import type { OverviewFeature } from "@/config";
+import { formatCurrency } from "@/utils";
+import NextLogo from "../next-logo";
+import { DemoThumbnail } from "./demo";
+
+type OverviewSectionProps = {
+  totalHoursMin: number;
+  totalHoursMax: number;
+  totalCostMin: number;
+  totalCostMax: number;
+  stepsCount: number;
+  features: OverviewFeature[];
+  conceptSummary: {
+    name: string;
+    description: string;
+  };
+};
+
+export default function OverviewSection({
+  totalHoursMin,
+  totalHoursMax,
+  totalCostMin,
+  totalCostMax,
+  stepsCount,
+  features,
+  conceptSummary,
+}: OverviewSectionProps) {
+  const ICONS: Record<
+    OverviewFeature["icon"],
+    React.ComponentType<{ className?: string }>
+  > = {
+    Brain,
+    Users,
+    Trophy,
+    TrendingUp,
+    ArrowRight,
+  };
+  return (
+    <div className="space-y-8 transition-all duration-300 ease-out animate-in fade-in slide-in-from-bottom-2">
+      <div className="bg-white rounded-lg shadow-lg p-6">
+        <div className="flex flex-col lg:flex-row lg:items-start lg:gap-8 mb-6">
+          <div className="flex-1">
+            <h2 className="text-2xl font-bold text-gray-900">Aperçu du projet</h2>
+            <p className="text-gray-600">{conceptSummary.description}</p>
+          </div>
+          <div className="mt-4 lg:mt-0 lg:flex-shrink-0">
+            <DemoThumbnail />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="bg-primary/10 p-6 rounded-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-primary flex items-center gap-2">
+                  <Clock className="md:hidden h-4 w-4 text-primary" />
+                  <span>Total d&apos;heures</span>
+                </p>
+                {totalHoursMin === totalHoursMax ? (
+                  <p className="text-2xl font-bold text-primary">
+                    {totalHoursMin}h
+                  </p>
+                ) : (
+                  <p className="text-2xl font-bold text-primary">
+                    {totalHoursMin}h - {totalHoursMax}h
+                  </p>
+                )}
+              </div>
+              <Clock className="hidden md:block h-8 w-8 text-primary" />
+            </div>
+          </div>
+          <div className="bg-green-50 p-6 rounded-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-green-600 flex items-center gap-2">
+                  <DollarSign className="md:hidden h-4 w-4 text-green-600" />
+                  <span>Coût total</span>
+                </p>
+                {totalCostMin === totalCostMax ? (
+                  <p className="text-2xl font-bold text-green-900">
+                    ${formatCurrency(totalCostMin)}
+                  </p>
+                ) : (
+                  <p className="text-2xl font-bold text-green-900">
+                    ${formatCurrency(totalCostMin)} - $
+                    {formatCurrency(totalCostMax)}
+                  </p>
+                )}
+              </div>
+              <DollarSign className="hidden md:block h-8 w-8 text-green-600" />
+            </div>
+          </div>
+          <div className="bg-purple-50 p-6 rounded-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-purple-600 flex items-center gap-2">
+                  <Code className="md:hidden h-4 w-4 text-purple-600" />
+                  <span>Étapes du projet</span>
+                </p>
+                <p className="text-2xl font-bold text-purple-900">
+                  {stepsCount}
+                </p>
+              </div>
+              <Code className="hidden md:block h-8 w-8 text-purple-600" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="h-fit bg-white rounded-lg shadow-lg p-6">
+          <h3 className="text-xl font-bold text-gray-900 mb-4">
+            Fonctionnalités de l&apos;application
+          </h3>
+          <div className="space-y-4">
+            {features.map((f, idx) => {
+              const Icon = ICONS[f.icon];
+              return (
+                <div key={idx} className="flex items-center space-x-3">
+                  <div
+                    className="p-2 rounded-full"
+                    style={{ backgroundColor: `${f.color}20`, color: f.color }}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <span className="text-gray-700">{f.label}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-lg p-6">
+          <h3 className="text-xl font-bold text-gray-900 mb-6">
+            Pile technologique
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div className="relative flex size-[250px] flex-col items-center justify-center overflow-hidden">
+              <OrbitingCircles radius={100} iconSize={36}>
+                <NextLogo />
+                <Image
+                  src="psql.svg"
+                  alt="PostgreSQL"
+                  width={30}
+                  height={30}
+                />
+                <Image
+                  src="react.svg"
+                  alt="React"
+                  width={30}
+                  height={30}
+                />
+              </OrbitingCircles>
+              <OrbitingCircles radius={50} iconSize={36} reverse>
+                <Image
+                  src="/ElasticSearch.png"
+                  alt="Elasticsearch"
+                  width={30}
+                  height={30}
+                />
+              </OrbitingCircles>
+            </div>
+            <div className="w-full space-y-4">
+              <div className="border-l-4 border-primary pl-4">
+                <p className="text-sm text-gray-500">Frontend</p>
+                <p className="font-medium text-gray-900">Next.js + React</p>
+                <p className="text-sm text-gray-600">
+                  Interface utilisateur moderne et responsive
+                </p>
+              </div>
+              <div className="border-l-4 border-green-500 pl-4">
+                <p className="text-sm text-gray-500">Backend</p>
+                <p className="font-medium text-gray-900">FastAPI + PostgreSQL</p>
+                <p className="text-sm text-gray-600">
+                  API Python et base de données sécurisée
+                </p>
+              </div>
+              <div className="border-l-4 border-orange-500 pl-4">
+                <p className="text-sm text-gray-500">Search Engine</p>
+                <p className="font-medium text-gray-900">Elasticsearch</p>
+                <p className="text-sm text-gray-600">
+                  Indexation et recherche temps réel des logs
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="border rounded-lg p-3">
+              <p className="text-xs text-gray-500 flex items-center gap-2">
+                <Users className="w-4 h-4" />
+                IA Triage
+              </p>
+              <p className="font-medium text-gray-900">OpenAI/Claude</p>
+            </div>
+            <div className="border rounded-lg p-3">
+              <p className="text-xs text-gray-500 flex items-center gap-2">
+                <Code className="w-4 h-4" />
+                SOAR Lite
+              </p>
+              <p className="font-medium text-gray-900">n8n Workflows</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  );
+}
