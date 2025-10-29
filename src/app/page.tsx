@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Clock, DollarSign, Code, Target, ListPlus, UsersRound } from "lucide-react";
-import SentinelleLogo from "@/components/sentinelle-logo";
+import PrettyInsideOutLogo from "@/components/sentinelle-logo";
 import {
   COST_PER_HOUR,
   HOURS_MAX_MULTIPLIER,
@@ -192,7 +192,7 @@ export default function EstimateShowcase() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 py-6">
             <div className="flex items-start md:items-center space-x-3">
-              <SentinelleLogo />
+              <PrettyInsideOutLogo />
               <div>
                 <h1 className="text-xl md:text-2xl font-bold text-gray-900">
                   {selectedConceptSummary.name}

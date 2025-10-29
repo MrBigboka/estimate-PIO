@@ -10,12 +10,8 @@ import {
   TrendingUp,
   ArrowRight,
 } from "lucide-react";
-import { OrbitingCircles } from "@/components/magicui/orbiting-circles";
-import Image from "next/image";
 import type { OverviewFeature } from "@/config";
 import { formatCurrency } from "@/utils";
-import NextLogo from "../next-logo";
-import { DemoThumbnail } from "./demo";
 
 type OverviewSectionProps = {
   totalHoursMin: number;
@@ -52,14 +48,9 @@ export default function OverviewSection({
   return (
     <div className="space-y-8 transition-all duration-300 ease-out animate-in fade-in slide-in-from-bottom-2">
       <div className="bg-white rounded-lg shadow-lg p-6">
-        <div className="flex flex-col lg:flex-row lg:items-start lg:gap-8 mb-6">
-          <div className="flex-1">
-            <h2 className="text-2xl font-bold text-gray-900">Aperçu du projet</h2>
-            <p className="text-gray-600">{conceptSummary.description}</p>
-          </div>
-          <div className="mt-4 lg:mt-0 lg:flex-shrink-0">
-            <DemoThumbnail />
-          </div>
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-900">Aperçu du projet</h2>
+          <p className="text-gray-600">{conceptSummary.description}</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="bg-primary/10 p-6 rounded-lg">
@@ -147,70 +138,41 @@ export default function OverviewSection({
           <h3 className="text-xl font-bold text-gray-900 mb-6">
             Pile technologique
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div className="relative flex size-[250px] flex-col items-center justify-center overflow-hidden">
-              <OrbitingCircles radius={100} iconSize={36}>
-                <NextLogo />
-                <Image
-                  src="psql.svg"
-                  alt="PostgreSQL"
-                  width={30}
-                  height={30}
-                />
-                <Image
-                  src="react.svg"
-                  alt="React"
-                  width={30}
-                  height={30}
-                />
-              </OrbitingCircles>
-              <OrbitingCircles radius={50} iconSize={36} reverse>
-                <Image
-                  src="/ElasticSearch.png"
-                  alt="Elasticsearch"
-                  width={30}
-                  height={30}
-                />
-              </OrbitingCircles>
-            </div>
-            <div className="w-full space-y-4">
-              <div className="border-l-4 border-primary pl-4">
-                <p className="text-sm text-gray-500">Frontend</p>
-                <p className="font-medium text-gray-900">Next.js + React</p>
-                <p className="text-sm text-gray-600">
-                  Interface utilisateur moderne et responsive
-                </p>
-              </div>
-              <div className="border-l-4 border-green-500 pl-4">
-                <p className="text-sm text-gray-500">Backend</p>
-                <p className="font-medium text-gray-900">FastAPI + PostgreSQL</p>
-                <p className="text-sm text-gray-600">
-                  API Python et base de données sécurisée
-                </p>
-              </div>
-              <div className="border-l-4 border-orange-500 pl-4">
-                <p className="text-sm text-gray-500">Search Engine</p>
-                <p className="font-medium text-gray-900">Elasticsearch</p>
-                <p className="text-sm text-gray-600">
-                  Indexation et recherche temps réel des logs
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="border rounded-lg p-3">
-              <p className="text-xs text-gray-500 flex items-center gap-2">
-                <Users className="w-4 h-4" />
-                IA Triage
+          <div className="space-y-4">
+            <div className="border-l-4 border-[#96bf48] pl-4">
+              <p className="text-sm text-gray-500">Plateforme</p>
+              <p className="font-medium text-gray-900">Shopify (Thème Prestige)</p>
+              <p className="text-sm text-gray-600">
+                E-commerce haut de gamme avec infrastructure complète
               </p>
-              <p className="font-medium text-gray-900">OpenAI/Claude</p>
             </div>
-            <div className="border rounded-lg p-3">
-              <p className="text-xs text-gray-500 flex items-center gap-2">
-                <Code className="w-4 h-4" />
-                SOAR Lite
+            <div className="border-l-4 border-[#9333EA] pl-4">
+              <p className="text-sm text-gray-500">Fidélité & Portail client</p>
+              <p className="font-medium text-gray-900">Growave</p>
+              <p className="text-sm text-gray-600">
+                Points de fidélité, wishlist et espace membre VIP
               </p>
-              <p className="font-medium text-gray-900">n8n Workflows</p>
+            </div>
+            <div className="border-l-4 border-[#10B981] pl-4">
+              <p className="text-sm text-gray-500">Mesures intelligentes</p>
+              <p className="font-medium text-gray-900">Kiwi Sizing</p>
+              <p className="text-sm text-gray-600">
+                Tables de tailles dynamiques et recommandations
+              </p>
+            </div>
+            <div className="border-l-4 border-[#EF4444] pl-4">
+              <p className="text-sm text-gray-500">Retours automatisés</p>
+              <p className="font-medium text-gray-900">Loop Returns</p>
+              <p className="text-sm text-gray-600">
+                Portail de retours client automatisé
+              </p>
+            </div>
+            <div className="border-l-4 border-[#EC4899] pl-4">
+              <p className="text-sm text-gray-500">Email Marketing</p>
+              <p className="font-medium text-gray-900">Klaviyo</p>
+              <p className="text-sm text-gray-600">
+                Automatisations email et séquences personnalisées
+              </p>
             </div>
           </div>
         </div>

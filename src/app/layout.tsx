@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Estimation — Automatisations RH",
-  description: "Estimation de développement, coûts et calendrier des workflows RH",
+  title: "Pretty Inside Out — Estimation de projet",
+  description: "Estimation de développement, coûts et calendrier de projet",
 };
 
 export default function RootLayout({

@@ -1,14 +1,13 @@
 import Image from "next/image";
 
-export default function SentinelleLogo() {
+export default function PrettyInsideOutLogo() {
   return (
-    <div className="bg-gray-700 p-2 rounded-lg">
+    <div className="p-2 rounded-lg">
       <Image
-        src="/sentinel-logo.png"
-        alt="Sentinelle"
+        src="/logo_pio.avif"
+        alt="Pretty Inside Out"
         width={52}
         height={52}
-        className="grayscale"
       />
     </div>
   );
