@@ -2,7 +2,7 @@ import { COMPLEXITY_SCORE, Step } from "./config";
 
 export const getStepHoursMin = (step: Step): number => {
   if (step.subSteps && step.subSteps.length > 0) {
-    return step.subSteps.reduce((acc, s) => acc + s.hours, 0);
+    return step.subSteps.reduce((acc: number, s) => acc + s.hours, 0);
   }
   return step.hours ?? 0;
 };
@@ -10,7 +10,7 @@ export const getStepHoursMin = (step: Step): number => {
 export const getStepComplexity = (step: Step): number => {
   if (step.subSteps && step.subSteps.length > 0) {
     const sum = step.subSteps.reduce(
-      (acc, s) => acc + COMPLEXITY_SCORE[s.complexity],
+      (acc: number, s) => acc + COMPLEXITY_SCORE[s.complexity],
       0
     );
     return sum / step.subSteps.length;

@@ -1,429 +1,286 @@
-export type SubStep = {
-  title: string;
-  hours: number;
-  complexity: "Faible" | "Moyenne" | "Élevée";
-  description: string;
-};
+// Offre unique pour l'estimation du projet P.I.O — Shopify
 
-export type Step = {
-  id: number;
-  name: string;
-  // Detailed estimation inputs
-  hours?: number; // minimal hours when no subSteps
-  // complexity is intentionally omitted; derived from subSteps mean
-  complexity?: number;
-  color: string;
-  subSteps?: SubStep[];
-  backendNotes?: string[];
-  tablesRequired?: string[];
-  // When true, disable max range multiplier; display hoursMax as 1h and set costMax to 0
-  disableMaxMultiplier?: boolean;
-};
+import type { OfferConfig, Step } from "./config_old";
 
-export type OverviewFeature = {
-  label: string;
-  icon: "Brain" | "Users" | "Trophy" | "TrendingUp" | "ArrowRight";
-  color: string; // hex color like #0EA5E9
-};
+// Export des types depuis config_old
+export type { SubStep, Step, OverviewFeature, OfferConfig, ProjectMonth } from "./config_old";
 
-export type OfferConfig = {
-  id: string;
-  name: string;
-  conceptSummary: { name: string; description: string };
-  steps: Step[];
-  overviewFeatures: OverviewFeature[];
-};
-
-export type ProjectMonth = {
-  name: string;
-  percent: number; // 0..1 portion of the total budget
-};
-
-// Compute global step complexity as the mean of sub-steps (linear, not rounded)
-export const COMPLEXITY_SCORE: Record<SubStep["complexity"], number> = {
+// Échelle de complexité
+export const COMPLEXITY_SCORE: Record<"Faible" | "Moyenne" | "Élevée", number> = {
   Faible: 1,
   Moyenne: 3,
   Élevée: 7,
 };
 
-export const SIGN_LINK = "";
-
-// Offre unique pour l'estimation du projet Sentinelle - CherySec Solutions
+// ===============================
+// 🔹 OFFRE PRINCIPALE — P.I.O
+// ===============================
 export const OFFER: OfferConfig = {
-  id: "sentinelle-soc",
-  name: "Sentinelle",
+  id: "pio-shopify",
+  name: "P.I.O – Boutique Shopify complète",
   conceptSummary: {
-    name: "Sentinelle – CherySec Solutions",
+    name: "P.I.O — Boutique Shopify haut de gamme",
     description:
-      "SOC-as-a-Service cloud-native pour PME/MSP/entreprises, combinant ingestion de logs, règles Sigma/YARA, triage IA (RAG/LLM) et SOAR lite pour détecter, prioriser et répondre rapidement aux incidents",
+      "Refonte complète d'un e-commerce Shopify pour P.I.O : expérience sur mesure intégrant boutique, mesure personnalisée, fidélité, retours automatisés et intégrations AI (photos, SEO, Klaviyo).",
   },
   steps: [
     {
       id: 0,
-      name: "Phase 0 — Setup Environnement & CI/CD",
+      name: "Phase 0 — Setup & Environnement Shopify",
       color: "#6B7280",
       backendNotes: [
-        "Technologies: GitHub Actions, Docker Compose, Vercel, VM déploiement, Sentry, Grafana",
-        "Infrastructure: FastAPI + Postgres + Redis + Elasticsearch en développement",
-        "Déploiement: Staging/Production avec monitoring pipeline",
+        "Stack : Shopify + Thème custom (Liquid + Tailwind), Klaviyo, Loop, Growave",
+        "Configuration du store, taxes, paiements, livraisons, domaines, comptes",
+        "Base : Shopify Advanced avec accès API complet",
       ],
       subSteps: [
-        {
-          title: "Setup repo + conventions + GitHub Actions",
-          hours: 4,
-          complexity: "Moyenne",
-          description: "Configuration repository avec conventions de code et CI/CD",
-        },
-        {
-          title: "Docker Compose (FastAPI + Postgres + Redis + ES) pour dev",
-          hours: 6,
-          complexity: "Moyenne",
-          description: "Environnement de développement containerisé complet",
-        },
-        {
-          title: "Provision VM cloud + configuration de base (TLS, firewall, monitoring)",
-          hours: 6,
-          complexity: "Moyenne",
-          description: "Création VM, Docker, sécurisation TLS/firewall, préparation hébergement",
-        },
-        {
-          title: "Déploiement staging/prod (Vercel front + VM back)",
-          hours: 6,
-          complexity: "Moyenne",
-          description: "Pipeline de déploiement automatisé staging et production",
-        },
-        {
-          title: "Config monitoring pipeline ingestion (Sentry/Grafana hooks)",
-          hours: 4,
-          complexity: "Moyenne",
-          description: "Configuration monitoring et observabilité des pipelines",
-        },
+        { title: "Setup du store + environnement de test", hours: 6, complexity: "Moyenne", description: "Configuration du store Shopify, domaines, paiements, modes de test" },
+        { title: "Installation du thème custom (Liquid + Tailwind)", hours: 6, complexity: "Moyenne", description: "Base front avec sections modulaires et composants personnalisés" },
+        { title: "Configuration produits et collections", hours: 6, complexity: "Moyenne", description: "Création des collections, variantes et tags de filtrage" },
       ],
     },
     {
       id: 1,
-      name: "Phase 1 — Ingestion & Indexation (Logs)",
+      name: "Phase 1 — Pages structurantes",
       color: "#2563EB",
       backendNotes: [
-        "Technologies: Sysmon, Winlogbeat/rsyslog/Filebeat, Logstash, FastAPI, Elasticsearch, PostgreSQL, Redis",
-        "Pipelines Beats → Logstash (grok/ecs) → Elasticsearch (templates, ILM 30j)",
-        "Sécurité: TLS, tokens d'ingestion, RBAC minimal par organisation",
+        "Pages : Home, About us (Mission, Valeurs, Fondatrice), Collections, FAQ, Politique, Contact",
+        "Sections réutilisables et contenus administrables",
       ],
       subSteps: [
-        {
-          title: "Agents Windows (Sysmon + Winlogbeat)",
-          hours: 8,
-          complexity: "Élevée",
-          description: "Configuration agents Windows pour ingestion logs",
-        },
-        {
-          title: "Agents Linux (rsyslog/Filebeat)",
-          hours: 6,
-          complexity: "Moyenne",
-          description: "Configuration agents Linux pour ingestion logs",
-        },
-        {
-          title: "Logstash pipelines (parsing ECS)",
-          hours: 8,
-          complexity: "Élevée",
-          description: "Pipelines de parsing et normalisation ECS",
-        },
-        {
-          title: "Index templates + ILM (retention)",
-          hours: 6,
-          complexity: "Moyenne",
-          description: "Templates Elasticsearch et gestion du cycle de vie",
-        },
-        {
-          title: "API Ingest FastAPI (auth tenant + rate-limit Redis)",
-          hours: 6,
-          complexity: "Élevée",
-          description: "API d'ingestion avec authentification et rate limiting",
-        },
+        { title: "Page Home + Hero section + Collections dynamiques", hours: 8, complexity: "Élevée", description: "Page d'accueil immersive avec mise en avant des produits" },
+        { title: "Page About us (Fondatrice, Mission, Valeurs)", hours: 5, complexity: "Faible", description: "Page statique structurée avec sections textuelles et images pour la fondatrice et valeurs de l'entreprise" },
+        { title: "FAQ + Pages politiques légales", hours: 3, complexity: "Faible", description: "Ajout du centre d'aide et pages statiques (retours, confidentialité)" },
       ],
     },
     {
       id: 2,
-      name: "Phase 2 — Backend Core & Corrélation minimale",
+      name: "Phase 2 — Shop & Filtres intelligents",
       color: "#10B981",
       backendNotes: [
-        "Technologies: FastAPI, PostgreSQL (SQL + JSONB), Elasticsearch, Redis",
-        "Schémas: events, alerts, incidents, assets, tenants, users, roles",
-        "Corrélation v0: règles simples + seuil d'événements (no ML)",
+        "Système de filtres : catégorie, marque, taille, couleur, prix, nouveautés",
+        "Collections dynamiques : New Arrivals, Best Picks, Essentials, Collections du mois",
+        "Compatibilité SEO + performance",
       ],
       subSteps: [
-        {
-          title: "Schémas + migrations (Prisma/SQL)",
-          hours: 6,
-          complexity: "Moyenne",
-          description: "Modèles de données et migrations PostgreSQL",
-        },
-        {
-          title: "Normalisation champs + dédup",
-          hours: 6,
-          complexity: "Moyenne",
-          description: "Normalisation des événements et déduplication",
-        },
-        {
-          title: "Corrélation v0 (règles basiques)",
-          hours: 8,
-          complexity: "Élevée",
-          description: "Moteur de corrélation simple avec règles de base",
-        },
-        {
-          title: "RBAC/tenants (org_id, scopes)",
-          hours: 4,
-          complexity: "Moyenne",
-          description: "Système de rôles et isolation multi-tenant",
-        },
-        {
-          title: "Tests API + doc OpenAPI",
-          hours: 4,
-          complexity: "Faible",
-          description: "Tests unitaires et documentation OpenAPI",
-        },
+        { title: "Shop all + vue collection + filtres combinés", hours: 10, complexity: "Élevée", description: "Composants de filtres dynamiques avec tri et double sélection" },
+        { title: "Intégration filtre prix / couleur / nouveautés", hours: 6, complexity: "Moyenne", description: "Filtres avancés multi-critères configurables" },
+        { title: "Recherche et mots-clés (Shopify Search & Discovery)", hours: 4, complexity: "Moyenne", description: "Configuration de la recherche intelligente par tags" },
+        { title: "Collections dynamiques (New Arrivals, Best Picks, Essentials, Collections du mois)", hours: 3, complexity: "Faible", description: "Configuration des collections automatiques basées sur tags et dates" },
       ],
     },
     {
       id: 3,
-      name: "Phase 3 — Dashboard & Case Management (v0)",
+      name: "Phase 3 — Mesures & Fitting intelligent",
       color: "#9333EA",
       backendNotes: [
-        "Technologies: Next.js/React, Tailwind, shadcn/ui, Recharts",
-        "Filtres par sévérité, tenant, source, période",
-        "Audit trail basique (qui fait quoi, quand)",
+        "Intégration Kiwi sizing + table de tailles + tutoriels",
+        "Automatisation mesure + pages d'aide",
+        "Note : Intégration standard de Kiwi Sizing. Toute customisation avancée du widget sera facturée en extra.",
       ],
       subSteps: [
-        {
-          title: "Shell app + Auth (SSO plus tard)",
-          hours: 4,
-          complexity: "Faible",
-          description: "Structure de base de l'application avec authentification",
-        },
-        {
-          title: "Vues Alertes/Incidents + filtres",
-          hours: 6,
-          complexity: "Moyenne",
-          description: "Interfaces principales avec système de filtrage",
-        },
-        {
-          title: "Recherche logs (ES)",
-          hours: 4,
-          complexity: "Moyenne",
-          description: "Recherche dans les logs via Elasticsearch",
-        },
-        {
-          title: "MITRE heatmap (mapping v0)",
-          hours: 3,
-          complexity: "Faible",
-          description: "Visualisation MITRE ATT&CK basique",
-        },
-        {
-          title: "Case Management (assign/notes/status)",
-          hours: 3,
-          complexity: "Moyenne",
-          description: "Gestion des cas avec assignation et commentaires",
-        },
+        { title: "Tables de tailles dynamiques", hours: 6, complexity: "Moyenne", description: "Création de tables responsive pour différentes catégories" },
+        { title: "Intégration Kiwi sizing (custom tab + modal)", hours: 9, complexity: "Élevée", description: "Ajout module de mesure interactif dans page produit avec configuration standard" },
+        { title: "Tutoriels et astuces de mesure (vidéo/image)", hours: 4, complexity: "Faible", description: "Page conseils et vidéos pour aider les clientes" },
       ],
     },
     {
       id: 4,
-      name: "Phase 4 — Triage IA (RAG/LLM) v0",
+      name: "Phase 4 — Profil & Fidélité",
       color: "#F59E0B",
       backendNotes: [
-        "Technologies: OpenAI/Claude, Weaviate/Pinecone ou pgvector, RAG",
-        "Résumé d'alertes, score de risque, suggestions (playbooks)",
-        "Pane latéral IA dans l'UI",
+        "Portail client Growave : points, favoris, préférences, membership",
+        "Klaviyo : automatisations email et récompenses",
+        "Magical Preorder intégré pour membres exclusifs",
       ],
       subSteps: [
-        {
-          title: "Data prep (Sigma, MITRE, playbooks)",
-          hours: 4,
-          complexity: "Moyenne",
-          description: "Préparation des données pour le RAG",
-        },
-        {
-          title: "Prompts engineering",
-          hours: 4,
-          complexity: "Élevée",
-          description: "Développement des prompts pour triage IA",
-        },
-        {
-          title: "Vector store setup",
-          hours: 4,
-          complexity: "Élevée",
-          description: "Configuration du store vectoriel pour RAG",
-        },
-        {
-          title: "UI pane IA",
-          hours: 4,
-          complexity: "Moyenne",
-          description: "Interface utilisateur pour le triage IA",
-        },
-        {
-          title: "Evaluation & tuning",
-          hours: 2,
-          complexity: "Faible",
-          description: "Tests et ajustements du modèle IA",
-        },
+        { title: "Portail client (infos, préférences, favoris)", hours: 10, complexity: "Élevée", description: "Pages profil client personnalisées via Growave" },
+        { title: "Points de fidélité + économies affichées", hours: 6, complexity: "Moyenne", description: "Système de points et affichage économies panier" },
+        { title: "Membership / La Voute (espace VIP basique)", hours: 7, complexity: "Élevée", description: "Espace réservé aux membres premium avec tags VIP et prix exclusifs via Growave" },
+        { title: "Magical Preorder (pour membres)", hours: 5, complexity: "Moyenne", description: "Intégration des preorders exclusifs réservés aux membres via Growave" },
       ],
     },
     {
       id: 5,
-      name: "Phase 5 — SOAR Lite (actions guidées)",
+      name: "Phase 5 — Checkout & Retours",
       color: "#EF4444",
       backendNotes: [
-        "Technologies: n8n, webhooks FastAPI, intégrations Cloudflare/Jira/ServiceNow",
-        "Actions semi-automatisées: block IP, fermeture port, ticketing",
-        "Templates d'emails",
+        "Checkout extensible : Planet, Protect my Order, Parcel Panel",
+        "Retours automatisés : Loop (solution principale recommandée)",
+        "Note : Coolify peut être ajouté mais augmentera les heures de 4-5h pour l'intégration coordonnée",
       ],
       subSteps: [
-        {
-          title: "Connecteur Cloudflare (MVP)",
-          hours: 12,
-          complexity: "Élevée",
-          description: "Intégration API Cloudflare pour blocage IP avec authentification sécurisée",
-        },
-        {
-          title: "Framework SOAR & UI actions",
-          hours: 6,
-          complexity: "Moyenne",
-          description: "Interface pour déclencher les actions SOAR",
-        },
-        {
-          title: "Audit trail & gouvernance",
-          hours: 4,
-          complexity: "Moyenne",
-          description: "Traçabilité des actions executées",
-        },
-        {
-          title: "Tests d'intégration & sandbox",
-          hours: 4,
-          complexity: "Faible",
-          description: "Tests des workflows SOAR",
-        },
+        { title: "Checkout custom (Planet + Protect my Order)", hours: 6, complexity: "Moyenne", description: "Intégration des apps dans le flux de paiement" },
+        { title: "Retours automatisés (Loop)", hours: 6, complexity: "Élevée", description: "Flux retour client automatisé avec notifications et portail Loop" },
+        { title: "Parcel Panel (tracking de livraison)", hours: 3, complexity: "Moyenne", description: "Configuration du suivi de commande personnalisé" },
+        { title: "Rappel politique de retour + disclaimers", hours: 3, complexity: "Faible", description: "Ajout sections légales au checkout" },
       ],
     },
     {
       id: 6,
-      name: "Phase 6 — Pilot, QA & Feedback",
+      name: "Phase 6 — SEO, AI & Performance",
       color: "#0EA5E9",
       backendNotes: [
-        "Technologies: Sentry, Grafana/Prometheus, Upptime",
-        "Onboarding 1-2 pilotes, SLA basique, playbooks d'exploitation",
+        "SEO Store AI : meta descriptions et titles automatiques",
+        "Botika : génération AI de visuels produits",
+        "Vitals : monitoring performance & UX",
+        "Shopify Chat : configuration du module de conversation",
       ],
       subSteps: [
-        {
-          title: "Runbook d'exploitation",
-          hours: 4,
-          complexity: "Moyenne",
-          description: "Documentation opérationnelle et procédures",
-        },
-        {
-          title: "Observabilité (Sentry, Grafana)",
-          hours: 4,
-          complexity: "Moyenne",
-          description: "Monitoring et alerting système",
-        },
-        {
-          title: "Pilot clients & itérations",
-          hours: 4,
-          complexity: "Faible",
-          description: "Onboarding pilotes et ajustements",
-        },
+        { title: "SEO Store AI : description et métas auto", hours: 4, complexity: "Moyenne", description: "Intégration automatisée SEO AI sur produits et collections" },
+        { title: "Botika (photos AI)", hours: 4, complexity: "Faible", description: "Connexion Botika pour générer visuels réalistes de produits" },
+        { title: "Optimisation performance (Vitals)", hours: 4, complexity: "Moyenne", description: "Audit Core Web Vitals + correctifs front" },
+        { title: "Configuration Shopify Chat", hours: 2, complexity: "Faible", description: "Setup du chat client et intégration avec le thème" },
+      ],
+    },
+    {
+      id: 7,
+      name: "Phase 7 — QA, Formation & Lancement",
+      color: "#14B8A6",
+      backendNotes: [
+        "Tests internes techniques + Phase de recette client (UAT)",
+        "Formation administrateurs",
+        "Lancement progressif + monitoring post-launch",
+      ],
+      subSteps: [
+        { title: "Tests internes et techniques", hours: 8, complexity: "Moyenne", description: "Tests techniques effectués par l'équipe sur navigateurs de référence (Chrome desktop/mobile)" },
+        { title: "Phase de recette client (UAT) + corrections", hours: 10, complexity: "Moyenne", description: "Période de 5 jours ouvrables pour tests client et corrections des bogues mineurs rapportés" },
+        { title: "Formation Shopify admin", hours: 4, complexity: "Faible", description: "Session de formation à la gestion produits, commandes et apps" },
+        { title: "Lancement + monitoring post-prod", hours: 4, complexity: "Moyenne", description: "Déploiement final + corrections critiques post-lancement (première semaine)" },
+      ],
+    },
+    {
+      id: 8,
+      name: "Phase 8 — Formulaires & Engagement",
+      color: "#EC4899",
+      backendNotes: [
+        "Formulaires custom pour devenir ambassadrice et membre",
+        "Intégration avec Klaviyo pour automatisations email",
+      ],
+      subSteps: [
+        { title: "Formulaire 'Devenir ambassadrice'", hours: 3, complexity: "Faible", description: "Formulaire custom avec intégration Klaviyo pour qualification des ambassadrices" },
+        { title: "Formulaire 'Devenir membre' + Infolettre", hours: 3, complexity: "Faible", description: "Formulaires d'inscription avec automation Klaviyo pour onboarding membres" },
       ],
     },
   ],
   overviewFeatures: [
-    { label: "Détection en temps réel + triage IA en 4 semaines (MVP)", icon: "TrendingUp", color: "#2563EB" },
-    { label: "MSP-ready : multi-tenant & RBAC dès la v1", icon: "Users", color: "#9333EA" },
-    { label: "SOAR lite : actions guidées sécurisées", icon: "Brain", color: "#10B981" },
-    { label: "Chemin clair vers compliance (SOC2/ISO)", icon: "Trophy", color: "#EF4444" },
+    { label: "Expérience e-commerce premium sur mesure", icon: "TrendingUp", color: "#2563EB" },
+    { label: "Fidélité et membres intégrés via Growave", icon: "Users", color: "#9333EA" },
+    { label: "Système de mesures intelligent (Kiwi sizing)", icon: "Brain", color: "#10B981" },
+    { label: "Retours et durabilité via Planet & Loop", icon: "Trophy", color: "#F59E0B" },
   ],
 };
 
+// ===============================
+// 🔹 OPTIONS ADDITIONNELLES
+// ===============================
 export const ADDITIONAL_OPTIONS: Step[] = [
   {
     id: 100,
-    name: "SSO (Azure AD/Google)",
+    name: "Lookbook Vidéo",
     color: "#8B5CF6",
     disableMaxMultiplier: true,
-    backendNotes: [
-      "OAuth/OIDC, SCIM light",
-    ],
+    backendNotes: ["Ajout d'une page Lookbook avec vidéos interactives"],
     subSteps: [
-      {
-        title: "OAuth/OIDC + SCIM light",
-        hours: 14,
-        complexity: "Élevée",
-        description: "Single Sign-On avec provisioning utilisateurs",
-      },
+      { title: "Page Lookbook + upload vidéos", hours: 10, complexity: "Moyenne", description: "Création d'une page Lookbook vidéo immersive" },
     ],
   },
   {
     id: 101,
-    name: "Rapports Compliance",
-    color: "#EF4444",
-    disableMaxMultiplier: true,
-    backendNotes: [
-      "SOC2/ISO27001 PDF planifiés",
-    ],
-    subSteps: [
-      {
-        title: "Templates SOC2/ISO27001",
-        hours: 16,
-        complexity: "Moyenne",
-        description: "Rapports de conformité automatisés",
-      },
-    ],
-  },
-  {
-    id: 102,
-    name: "EDR Intégration",
+    name: "Assistant AI produit",
     color: "#10B981",
     disableMaxMultiplier: true,
-    backendNotes: [
-      "SentinelOne/CrowdStrike (read-only)",
-    ],
+    backendNotes: ["Assistant OpenAI pour suggestions produits et tailles"],
     subSteps: [
-      {
-        title: "SentinelOne/CrowdStrike read-only",
-        hours: 20,
-        complexity: "Élevée",
-        description: "Intégration EDR en lecture seule",
-      },
+      { title: "Assistant AI (suggestions de taille ou produits)", hours: 16, complexity: "Élevée", description: "Chat AI intégré dans le store pour aider les clientes" },
     ],
   },
   {
     id: 103,
-    name: "Mobile Alerts",
-    color: "#F59E0B",
+    name: "Mode d'essayage virtuel (AI Fit)",
+    color: "#EF4444",
+    disableMaxMultiplier: true,
+    backendNotes: ["Utilisation d'un modèle 3D AI Fit via Botika ou Vue.ai"],
+    subSteps: [
+      { title: "Essayage virtuel AI", hours: 24, complexity: "Élevée", description: "Intégration d'un module d'essayage AI (visuel 3D sur mannequin)" },
+    ],
+  },
+  {
+    id: 104,
+    name: "La Voute Premium (contenu exclusif avancé)",
+    color: "#7C3AED",
     disableMaxMultiplier: true,
     backendNotes: [
-      "App légère iOS/Android",
+      "Upgrade de La Voute basique vers expérience premium complète",
+      "Portail privé avec contenu exclusif, preorders early access, événements membres",
     ],
     subSteps: [
-      {
-        title: "App iOS/Android légère",
-        hours: 32,
-        complexity: "Élevée",
-        description: "Application mobile pour alertes critiques",
-      },
+      { title: "La Voute Premium", hours: 8, complexity: "Élevée", description: "Transformation de l'espace membre en portail premium avec contenu exclusif, calendrier événements et early access produits" },
+    ],
+  },
+  {
+    id: 105,
+    name: "Intégration Coolify (en plus de Loop)",
+    color: "#F97316",
+    disableMaxMultiplier: true,
+    backendNotes: [
+      "Ajout de Coolify pour compléter Loop",
+      "Nécessite coordination entre les deux plateformes de retours",
+    ],
+    subSteps: [
+      { title: "Intégration Coolify + coordination avec Loop", hours: 5, complexity: "Moyenne", description: "Configuration de Coolify et synchronisation avec le flux Loop existant" },
     ],
   },
 ];
 
+// ===============================
+// 🔹 MÉTRIQUES ET TIMELINE
+// ===============================
+export const COST_PER_HOUR = 135;
+export const HOURS_MAX_MULTIPLIER = 1.15;
+export const SIGN_LINK = "";
+
+// Note sur les frais d'abonnements Shopify Apps (à inclure dans la proposition)
+export const MONTHLY_APP_COSTS_NOTE = `
+💳 FRAIS D'ABONNEMENTS TIERS (non inclus dans l'estimation)
+
+Cette estimation couvre le développement et l'intégration. Un budget mensuel additionnel 
+de 350-500 CAD/mois est requis pour les abonnements aux applications Shopify :
+
+- Growave (fidélité & portail client) : ~200 CAD/mois
+- Loop (retours automatisés) : ~80 CAD/mois  
+- Kiwi Sizing (mesures intelligentes) : ~40 CAD/mois
+- Apps supplémentaires (SEO AI, Botika, Vitals, Chat, Parcel Panel) : ~50-100 CAD/mois
+
+*Estimation basée sur les plans Growth nécessaires pour ce niveau de customisation.
+Les coûts réels peuvent varier selon le volume de commandes et les fonctionnalités activées.
+`;
+
 export const PROJECT_SCHEDULE = [
-  { name: "Semaine 1-2", percent: 0.65 }, // Phase 1-2 - MVP Core
-  { name: "Semaine 3-4", percent: 0.35 }, // Phase 3 - Dashboard
-  // Extensions (mois 2)
-  { name: "Extensions", percent: 0.35 }, // Phase 4-6 - IA & SOAR
+  { name: "Semaines 1-2", percent: 0.22 },
+  { name: "Semaines 3-4", percent: 0.24 },
+  { name: "Semaines 5-6", percent: 0.24 },
+  { name: "Semaines 7-8", percent: 0.18 },
+  { name: "Semaines 9-10", percent: 0.12 },
 ];
 
-export const COST_PER_HOUR = 138;
-export const HOURS_MAX_MULTIPLIER = 1.15;
+export const TIMELINE_DATA = [
+  { month: "Semaine 1", planning: 30, development: 0, testing: 0, deployment: 0 },
+  { month: "Semaine 2", planning: 60, development: 15, testing: 0, deployment: 0 },
+  { month: "Semaine 3", planning: 80, development: 40, testing: 5, deployment: 0 },
+  { month: "Semaine 4", planning: 90, development: 60, testing: 20, deployment: 0 },
+  { month: "Semaine 5", planning: 100, development: 75, testing: 40, deployment: 10 },
+  { month: "Semaine 6", planning: 100, development: 88, testing: 60, deployment: 30 },
+  { month: "Semaine 7", planning: 100, development: 96, testing: 80, deployment: 50 },
+  { month: "Semaine 8", planning: 100, development: 100, testing: 92, deployment: 70 },
+  { month: "Semaine 9", planning: 100, development: 100, testing: 98, deployment: 90 },
+  { month: "Semaine 10", planning: 100, development: 100, testing: 100, deployment: 100 },
+];
 
-// Variantes de calendrier (2, 3, 4, 6, 8, 12 mois)
+// ===============================
+// 🔹 VARIANTES (2m → 12m)
+// ===============================
+
 export const PROJECT_SCHEDULE_VARIANTS: Record<string, { name: string; percent: number }[]> = {
   "2m": [
     { name: "Mois 1", percent: 0.6 },
@@ -441,12 +298,12 @@ export const PROJECT_SCHEDULE_VARIANTS: Record<string, { name: string; percent: 
     { name: "Mois 4", percent: 0.15 },
   ],
   "6m": [
-    { name: "Mois 1", percent: 0.25 },
-    { name: "Mois 2", percent: 0.25 },
-    { name: "Mois 3", percent: 0.15 },
-    { name: "Mois 4", percent: 0.15 },
-    { name: "Mois 5", percent: 0.10 },
-    { name: "Mois 6", percent: 0.10 },
+    { name: "Mois 1", percent: 0.2 },
+    { name: "Mois 2", percent: 0.18 },
+    { name: "Mois 3", percent: 0.17 },
+    { name: "Mois 4", percent: 0.17 },
+    { name: "Mois 5", percent: 0.15 },
+    { name: "Mois 6", percent: 0.13 },
   ],
   "8m": [
     { name: "Mois 1", percent: 0.16 },
@@ -474,52 +331,6 @@ export const PROJECT_SCHEDULE_VARIANTS: Record<string, { name: string; percent: 
   ],
 };
 
-export const TIMELINE_DATA = [
-  {
-    month: "Mois 1",
-    planning: 30,
-    development: 0,
-    testing: 0,
-    deployment: 0,
-  },
-  {
-    month: "Mois 2",
-    planning: 60,
-    development: 20,
-    testing: 0,
-    deployment: 0,
-  },
-  {
-    month: "Mois 3",
-    planning: 100,
-    development: 50,
-    testing: 10,
-    deployment: 0,
-  },
-  {
-    month: "Mois 4",
-    planning: 100,
-    development: 80,
-    testing: 40,
-    deployment: 10,
-  },
-  {
-    month: "Mois 5",
-    planning: 100,
-    development: 100,
-    testing: 100,
-    deployment: 100,
-  },
-  {
-    month: "Mois 6",
-    planning: 100,
-    development: 100,
-    testing: 100,
-    deployment: 100,
-  },
-];
-
-// Variantes des données de calendrier (lignes) pour 2, 3, 4, 6, 8, 12 mois
 export const TIMELINE_DATA_VARIANTS: Record<
   string,
   { month: string; planning: number; development: number; testing: number; deployment: number }[]
