@@ -1,5 +1,6 @@
 // Configuration MVP optimisée pour P.I.O — Shopify
-// Version allégée basée sur l'analyse de l'existant
+// Version LITE: offre de base = Produits + Collections + Checkout (phases 0,1,5)
+// Les autres phases (2,3,4,6,7) sont déplacées en options additionnelles (mêmes IDs)
 
 import type { OfferConfig, Step } from "./config_old";
 
@@ -14,17 +15,18 @@ export const COMPLEXITY_SCORE: Record<"Faible" | "Moyenne" | "Élevée", number>
 };
 
 // ===============================
-// 🔹 OFFRE MVP — P.I.O (VERSION OPTIMISÉE)
+// 🔹 OFFRE MVP — P.I.O (VERSION LITE)
 // ===============================
 export const OFFER: OfferConfig = {
-  id: "pio-shopify-optimization",
-  name: "P.I.O – Optimisation & Mise en marché",
+  id: "pio-shopify-optimization-lite",
+  name: "P.I.O – Mise en marché (Lite)",
   conceptSummary: {
-    name: "P.I.O — Optimisation & Mise en marché Shopify",
+    name: "P.I.O — Optimisation & Mise en marché Shopify (Lite)",
     description:
-      "Optimisation d'une boutique Shopify existante pour la mise en marché : import produits, collections dynamiques, outils de conversion (fidélité, mesures, retours) et automatisations email. Infrastructure technique déjà en place, focus sur le lancement commercial.",
+      "Offre de base centrée sur la mise en vente rapide : audit, import produits, collections dynamiques et validation du checkout. Toutes les autres fonctionnalités avancées sont proposées en options additionnelles.",
   },
   steps: [
+    // ✅ Phase 0 — Incluse
     {
       id: 0,
       name: "Phase 0 — Audit & Configuration produits",
@@ -41,6 +43,7 @@ export const OFFER: OfferConfig = {
         { title: "Configuration collections de base", hours: 4, complexity: "Faible", description: "Création des collections New Arrivals, Best Picks, Essentials" },
       ],
     },
+    // ✅ Phase 1 — Incluse
     {
       id: 1,
       name: "Phase 1 — Pages structurantes optimisées",
@@ -58,122 +61,128 @@ export const OFFER: OfferConfig = {
         { title: "Révision pages légales + Contact", hours: 1, complexity: "Faible", description: "Vérification et ajustements mineurs" },
       ],
     },
-    {
-      id: 2,
-      name: "Phase 2 — Filtres & Navigation intelligente",
-      color: "#10B981",
-      backendNotes: [
-        "Filtres catégorie/taille déjà présents mais non alimentés",
-        "Ajout filtres prix, couleur, nouveautés",
-        "Configuration collections dynamiques automatiques",
-        "Utilisation Search & Discovery natif Shopify",
-      ],
-      subSteps: [
-        { title: "Activation et optimisation filtres existants", hours: 3, complexity: "Faible", description: "Configuration des filtres par catégorie, taille, marque déjà en place" },
-        { title: "Ajout filtres avancés (prix, couleur, nouveautés)", hours: 4, complexity: "Moyenne", description: "Intégration de filtres supplémentaires multi-critères" },
-        { title: "Configuration collections dynamiques automatiques", hours: 3, complexity: "Faible", description: "Règles auto pour New Arrivals, Best Picks basées sur tags/dates" },
-        { title: "Optimisation recherche par mots-clés", hours: 2, complexity: "Faible", description: "Configuration Search & Discovery avec tags intelligents" },
-      ],
-    },
-    {
-      id: 3,
-      name: "Phase 3 — Mesures intelligentes (Kiwi Sizing)",
-      color: "#9333EA",
-      backendNotes: [
-        "Installation et intégration standard de Kiwi Sizing",
-        "Tables de tailles dynamiques par catégorie",
-        "Page tutoriel mesures",
-        "Note : Configuration standard uniquement, customisation avancée en extra",
-      ],
-      subSteps: [
-        { title: "Installation et configuration Kiwi Sizing", hours: 4, complexity: "Moyenne", description: "Setup de base de l'app avec intégration dans pages produits" },
-        { title: "Tables de tailles dynamiques", hours: 3, complexity: "Moyenne", description: "Création tables responsive par catégorie (hauts, bas, robes, chaussures)" },
-        { title: "Page tutoriels et astuces mesures", hours: 2, complexity: "Faible", description: "Page d'aide avec guides visuels pour mesures" },
-      ],
-    },
-    {
-      id: 4,
-      name: "Phase 4 — Fidélité & Portail client (Growave)",
-      color: "#F59E0B",
-      backendNotes: [
-        "Installation Growave pour remplacer SE Wishlist actuel",
-        "Portail client avec favoris, points, préférences",
-        "La Voute basique (espace membre avec tags VIP)",
-        "Intégration Magical Preorder pour membres",
-      ],
-      subSteps: [
-        { title: "Installation et configuration Growave", hours: 4, complexity: "Moyenne", description: "Setup app, migration wishlist SE vers Growave" },
-        { title: "Portail client (favoris, infos, préférences)", hours: 5, complexity: "Moyenne", description: "Configuration du portail client personnalisé" },
-        { title: "Système points de fidélité + économies", hours: 4, complexity: "Moyenne", description: "Setup règles de points et affichage économies panier" },
-        { title: "La Voute (espace membre basique)", hours: 4, complexity: "Moyenne", description: "Espace VIP avec tags membres et prix exclusifs" },
-        { title: "Magical Preorder pour membres", hours: 3, complexity: "Moyenne", description: "Configuration preorders exclusifs membres" },
-      ],
-    },
+    // ✅ Phase 5 — Incluse (Checkout & Retours light = test checkout uniquement)
     {
       id: 5,
-      name: "Phase 5 — Checkout optimisé & Retours",
+      name: "Phase 5 — Checkout optimisé (validation de base)",
       color: "#EF4444",
       backendNotes: [
-        "Checkout Shopify déjà fonctionnel, ajout apps",
-        "Planet + Protect my Order + Parcel Panel",
-        "Loop pour retours automatisés (principal)",
-        "Note : Coolify non inclus, disponible en option (+5h)",
+        "Checkout Shopify déjà fonctionnel",
+        "Dans la version Lite : validation du flux sans apps payantes",
+        "Les intégrations Planet / Protect my Order / Parcel Panel / Loop sont en options",
       ],
       subSteps: [
-        { title: "Intégration Planet + Protect my Order", hours: 3, complexity: "Faible", description: "Ajout des apps dans le flux checkout" },
-        { title: "Installation et configuration Loop (retours)", hours: 5, complexity: "Moyenne", description: "Mise en place du portail retours client automatisé" },
-        { title: "Configuration Parcel Panel (tracking)", hours: 2, complexity: "Faible", description: "Setup du suivi de livraison personnalisé" },
-        { title: "Rappels politique de retour au checkout", hours: 1, complexity: "Faible", description: "Ajout disclaimers et liens politiques" },
-      ],
-    },
-    {
-      id: 6,
-      name: "Phase 6 — Email Marketing (Klaviyo)",
-      color: "#EC4899",
-      backendNotes: [
-        "Popup newsletter déjà en place via Uppush",
-        "Installation Klaviyo pour automatisations",
-        "Séquences essentielles : Bienvenue, Abandon panier, Post-achat",
-        "Migration des emails collectés",
-      ],
-      subSteps: [
-        { title: "Installation et configuration Klaviyo", hours: 3, complexity: "Moyenne", description: "Setup de base, connexion Shopify, migration emails" },
-        { title: "Séquence Bienvenue (Welcome series)", hours: 2, complexity: "Faible", description: "Flow d'onboarding pour nouveaux abonnés" },
-        { title: "Séquence Abandon panier", hours: 2, complexity: "Faible", description: "Flow de récupération des paniers abandonnés" },
-        { title: "Séquence Post-achat + Demande avis", hours: 2, complexity: "Faible", description: "Flow de suivi après commande" },
-        { title: "Intégration formulaires ambassadrice/membre", hours: 2, complexity: "Faible", description: "Formulaires custom avec automation Klaviyo" },
-      ],
-    },
-    {
-      id: 7,
-      name: "Phase 7 — QA, Formation & Lancement",
-      color: "#14B8A6",
-      backendNotes: [
-        "Tests complets du parcours client",
-        "Recette client (UAT) sur 5 jours",
-        "Formation administration Shopify",
-        "Support post-lancement 1 semaine",
-      ],
-      subSteps: [
-        { title: "Tests internes complets", hours: 4, complexity: "Moyenne", description: "Tests techniques sur navigateurs desktop/mobile" },
-        { title: "Phase de recette client (UAT) + corrections", hours: 6, complexity: "Moyenne", description: "Période de tests client et corrections bugs mineurs" },
-        { title: "Formation Shopify admin", hours: 2, complexity: "Faible", description: "Session formation gestion produits, commandes, apps" },
-        { title: "Lancement + support post-prod", hours: 3, complexity: "Faible", description: "Déploiement et corrections critiques première semaine" },
+        { title: "Vérification du flux Checkout (panier → paiement)", hours: 2, complexity: "Faible", description: "Tests taxes, livraisons, confirmations email" },
+        { title: "Ajustements mineurs (libellés, liens politiques)", hours: 1, complexity: "Faible", description: "Rappels politiques, disclaimers et liens utiles" },
       ],
     },
   ],
   overviewFeatures: [
     { label: "Mise en marché rapide avec base existante", icon: "TrendingUp", color: "#2563EB" },
-    { label: "Fidélité et membre via Growave", icon: "Users", color: "#9333EA" },
-    { label: "Mesures intelligentes (Kiwi Sizing)", icon: "Brain", color: "#10B981" },
-    { label: "Retours automatisés (Loop) & Email (Klaviyo)", icon: "Trophy", color: "#F59E0B" },
+    { label: "Produits + Collections + Checkout validés", icon: "ArrowRight", color: "#10B981" },
+    { label: "Aucun lock-in d’apps payantes", icon: "Brain", color: "#10B981" },
+    { label: "Extensions disponibles à la carte", icon: "Trophy", color: "#F59E0B" },
   ],
 };
 
 // ===============================
 // 🔹 OPTIONS ADDITIONNELLES
+// (Phases complètes déplacées + options 100-105 conservées)
 // ===============================
 export const ADDITIONAL_OPTIONS: Step[] = [
+  // 🔁 Phase 2 — déplacée telle quelle
+  {
+    id: 2,
+    name: "Phase 2 — Filtres & Navigation intelligente",
+    color: "#10B981",
+    backendNotes: [
+      "Filtres catégorie/taille déjà présents mais non alimentés",
+      "Ajout filtres prix, couleur, nouveautés",
+      "Configuration collections dynamiques automatiques",
+      "Utilisation Search & Discovery natif Shopify",
+    ],
+    subSteps: [
+      { title: "Activation et optimisation filtres existants", hours: 3, complexity: "Faible", description: "Configuration des filtres par catégorie, taille, marque déjà en place" },
+      { title: "Ajout filtres avancés (prix, couleur, nouveautés)", hours: 4, complexity: "Moyenne", description: "Intégration de filtres supplémentaires multi-critères" },
+      { title: "Configuration collections dynamiques automatiques", hours: 3, complexity: "Faible", description: "Règles auto pour New Arrivals, Best Picks basées sur tags/dates" },
+      { title: "Optimisation recherche par mots-clés", hours: 2, complexity: "Faible", description: "Configuration Search & Discovery avec tags intelligents" },
+    ],
+  },
+  // 🔁 Phase 3 — déplacée telle quelle
+  {
+    id: 3,
+    name: "Phase 3 — Mesures intelligentes (Kiwi Sizing)",
+    color: "#9333EA",
+    backendNotes: [
+      "Installation et intégration standard de Kiwi Sizing",
+      "Tables de tailles dynamiques par catégorie",
+      "Page tutoriel mesures",
+      "Note : Configuration standard uniquement, customisation avancée en extra",
+    ],
+    subSteps: [
+      { title: "Installation et configuration Kiwi Sizing", hours: 4, complexity: "Moyenne", description: "Setup de base de l'app avec intégration dans pages produits" },
+      { title: "Tables de tailles dynamiques", hours: 3, complexity: "Moyenne", description: "Création tables responsive par catégorie (hauts, bas, robes, chaussures)" },
+      { title: "Page tutoriels et astuces mesures", hours: 2, complexity: "Faible", description: "Page d'aide avec guides visuels pour mesures" },
+    ],
+  },
+  // 🔁 Phase 4 — déplacée telle quelle
+  {
+    id: 4,
+    name: "Phase 4 — Fidélité & Portail client (Growave)",
+    color: "#F59E0B",
+    backendNotes: [
+      "Installation Growave pour remplacer SE Wishlist actuel",
+      "Portail client avec favoris, points, préférences",
+      "La Voute basique (espace membre avec tags VIP)",
+      "Intégration Magical Preorder pour membres",
+    ],
+    subSteps: [
+      { title: "Installation et configuration Growave", hours: 4, complexity: "Moyenne", description: "Setup app, migration wishlist SE vers Growave" },
+      { title: "Portail client (favoris, infos, préférences)", hours: 5, complexity: "Moyenne", description: "Configuration du portail client personnalisé" },
+      { title: "Système points de fidélité + économies", hours: 4, complexity: "Moyenne", description: "Setup règles de points et affichage économies panier" },
+      { title: "La Voute (espace membre basique)", hours: 4, complexity: "Moyenne", description: "Espace VIP avec tags membres et prix exclusifs" },
+      { title: "Magical Preorder pour membres", hours: 3, complexity: "Moyenne", description: "Configuration preorders exclusifs membres" },
+    ],
+  },
+  // 🔁 Phase 6 — déplacée telle quelle
+  {
+    id: 6,
+    name: "Phase 6 — Email Marketing (Klaviyo)",
+    color: "#EC4899",
+    backendNotes: [
+      "Popup newsletter déjà en place via Uppush",
+      "Installation Klaviyo pour automatisations",
+      "Séquences essentielles : Bienvenue, Abandon panier, Post-achat",
+      "Migration des emails collectés",
+    ],
+    subSteps: [
+      { title: "Installation et configuration Klaviyo", hours: 3, complexity: "Moyenne", description: "Setup de base, connexion Shopify, migration emails" },
+      { title: "Séquence Bienvenue (Welcome series)", hours: 2, complexity: "Faible", description: "Flow d'onboarding pour nouveaux abonnés" },
+      { title: "Séquence Abandon panier", hours: 2, complexity: "Faible", description: "Flow de récupération des paniers abandonnés" },
+      { title: "Séquence Post-achat + Demande avis", hours: 2, complexity: "Faible", description: "Flow de suivi après commande" },
+      { title: "Intégration formulaires ambassadrice/membre", hours: 2, complexity: "Faible", description: "Formulaires custom avec automation Klaviyo" },
+    ],
+  },
+  // 🔁 Phase 7 — déplacée telle quelle
+  {
+    id: 7,
+    name: "Phase 7 — QA, Formation & Lancement",
+    color: "#14B8A6",
+    backendNotes: [
+      "Tests complets du parcours client",
+      "Recette client (UAT) sur 5 jours",
+      "Formation administration Shopify",
+      "Support post-lancement 1 semaine",
+    ],
+    subSteps: [
+      { title: "Tests internes complets", hours: 4, complexity: "Moyenne", description: "Tests techniques sur navigateurs desktop/mobile" },
+      { title: "Phase de recette client (UAT) + corrections", hours: 6, complexity: "Moyenne", description: "Période de tests client et corrections bugs mineurs" },
+      { title: "Formation Shopify admin", hours: 2, complexity: "Faible", description: "Session formation gestion produits, commandes, apps" },
+      { title: "Lancement + support post-prod", hours: 3, complexity: "Faible", description: "Déploiement et corrections critiques première semaine" },
+    ],
+  },
+
+  // ✅ Options 100–105 conservées
   {
     id: 100,
     name: "SEO & Performance Premium",
@@ -258,9 +267,9 @@ export const MONTHLY_APP_COSTS_NOTE = `
 💳 FRAIS D'ABONNEMENTS MENSUELS (non inclus dans l'estimation)
 
 Cette estimation couvre le développement et l'intégration. Budget mensuel additionnel 
-requis pour les applications Shopify : 300-450 CAD/mois
+requis pour les applications Shopify (si options activées) : 300-450 CAD/mois
 
-Apps principales :
+Apps principales (si choisies) :
 - Growave (fidélité & portail client) : ~150-200 CAD/mois
 - Loop (retours automatisés) : ~80 CAD/mois  
 - Kiwi Sizing (mesures intelligentes) : ~40 CAD/mois
@@ -296,7 +305,6 @@ export const TIMELINE_DATA = [
 // ===============================
 // 🔹 VARIANTES TIMELINE
 // ===============================
-
 export const PROJECT_SCHEDULE_VARIANTS: Record<string, { name: string; percent: number }[]> = {
   "2m": [
     { name: "Mois 1", percent: 0.6 },
@@ -320,6 +328,30 @@ export const PROJECT_SCHEDULE_VARIANTS: Record<string, { name: string; percent: 
     { name: "Mois 4", percent: 0.17 },
     { name: "Mois 5", percent: 0.15 },
     { name: "Mois 6", percent: 0.13 },
+  ],
+  "8m": [
+    { name: "Mois 1", percent: 0.16 },
+    { name: "Mois 2", percent: 0.15 },
+    { name: "Mois 3", percent: 0.14 },
+    { name: "Mois 4", percent: 0.13 },
+    { name: "Mois 5", percent: 0.13 },
+    { name: "Mois 6", percent: 0.12 },
+    { name: "Mois 7", percent: 0.10 },
+    { name: "Mois 8", percent: 0.07 },
+  ],
+  "12m": [
+    { name: "Mois 1", percent: 0.12 },
+    { name: "Mois 2", percent: 0.11 },
+    { name: "Mois 3", percent: 0.10 },
+    { name: "Mois 4", percent: 0.09 },
+    { name: "Mois 5", percent: 0.09 },
+    { name: "Mois 6", percent: 0.09 },
+    { name: "Mois 7", percent: 0.08 },
+    { name: "Mois 8", percent: 0.08 },
+    { name: "Mois 9", percent: 0.08 },
+    { name: "Mois 10", percent: 0.07 },
+    { name: "Mois 11", percent: 0.05 },
+    { name: "Mois 12", percent: 0.04 },
   ],
 };
 
@@ -350,14 +382,49 @@ export const TIMELINE_DATA_VARIANTS: Record<
     { month: "Mois 5", planning: 100, development: 90, testing: 70, deployment: 30 },
     { month: "Mois 6", planning: 100, development: 100, testing: 100, deployment: 100 },
   ],
+  "8m": [
+    { month: "Mois 1", planning: 25, development: 5, testing: 0, deployment: 0 },
+    { month: "Mois 2", planning: 50, development: 15, testing: 0, deployment: 0 },
+    { month: "Mois 3", planning: 70, development: 30, testing: 10, deployment: 0 },
+    { month: "Mois 4", planning: 85, development: 50, testing: 20, deployment: 0 },
+    { month: "Mois 5", planning: 95, development: 65, testing: 35, deployment: 5 },
+    { month: "Mois 6", planning: 100, development: 80, testing: 55, deployment: 15 },
+    { month: "Mois 7", planning: 100, development: 95, testing: 80, deployment: 50 },
+    { month: "Mois 8", planning: 100, development: 100, testing: 100, deployment: 100 },
+  ],
+  "12m": [
+    { month: "Mois 1", planning: 20, development: 0, testing: 0, deployment: 0 },
+    { month: "Mois 2", planning: 35, development: 5, testing: 0, deployment: 0 },
+    { month: "Mois 3", planning: 50, development: 15, testing: 0, deployment: 0 },
+    { month: "Mois 4", planning: 65, development: 25, testing: 5, deployment: 0 },
+    { month: "Mois 5", planning: 75, development: 35, testing: 10, deployment: 0 },
+    { month: "Mois 6", planning: 85, development: 50, testing: 20, deployment: 0 },
+    { month: "Mois 7", planning: 95, development: 60, testing: 30, deployment: 5 },
+    { month: "Mois 8", planning: 100, development: 70, testing: 45, deployment: 10 },
+    { month: "Mois 9", planning: 100, development: 85, testing: 60, deployment: 20 },
+    { month: "Mois 10", planning: 100, development: 95, testing: 80, deployment: 40 },
+    { month: "Mois 11", planning: 100, development: 100, testing: 95, deployment: 70 },
+    { month: "Mois 12", planning: 100, development: 100, testing: 100, deployment: 100 },
+  ],
 };
 
 // ===============================
 // 🔹 NOTES DE CONFIGURATION
 // ===============================
-
 export const CONFIG_NOTES = `
-📝 NOTES IMPORTANTES SUR CETTE CONFIGURATION MVP
+📝 NOTES IMPORTANTES — VERSION LITE
+
+🎯 Portée de l'offre de base (incluse) :
+- Phase 0 : Audit + Import produits + Collections
+- Phase 1 : Pages structurantes (Home, About, FAQ light)
+- Phase 5 : Checkout (validation de base, sans apps payantes)
+
+📦 Extensions disponibles (en options) :
+- Phase 2 : Filtres & Navigation (prix, couleur, nouveautés, recherche)
+- Phase 3 : Mesures intelligentes (Kiwi Sizing)
+- Phase 4 : Fidélité & Portail client (Growave, Preorder)
+- Phase 6 : Email Marketing (Klaviyo, flows)
+- Phase 7 : QA avancée, formation et lancement encadré
 
 ✅ CE QUI EST DÉJÀ EN PLACE (CONSERVÉ) :
 - Thème Prestige v5.6.1 (excellent, performant, luxe)
@@ -365,31 +432,12 @@ export const CONFIG_NOTES = `
 - Multi-langues (FR/EN) et multi-devises (CAD/USD)
 - Paiements configurés (Shop Pay, PayPal, Apple/Google Pay, cartes)
 - Infrastructure technique solide (CDN, PWA, RGPD, légal)
-- Design cohérent et professionnel
 - Shopify Chat/Inbox actif
 
-🔧 CE QUI SERA MODIFIÉ/AMÉLIORÉ :
-- Migration SE Wishlist → Growave (meilleure intégration fidélité)
-- Uppush conservé ou remplacé par Klaviyo selon préférence
-- Instagram Feed conservé (déjà fonctionnel)
-- Ajout de toutes les apps manquantes (Kiwi, Loop, Growave, etc.)
+💰 ESTIMATION LITE (ordre de grandeur) :
+~20 h × 135 $/h ≈ 2 700 $ CAD (selon volume produits)
+Les extensions sont chiffrées à la carte.
 
-🎯 FOCUS DU MVP :
-Ce projet n'est PAS une refonte complète, c'est une MISE EN MARCHÉ.
-Le site est déjà bien fait techniquement, il manque :
-1. Des produits à vendre
-2. Du contenu authentique
-3. Des outils de conversion (fidélité, retours, mesures)
-4. De l'automatisation email
-
-💰 BUDGET ESTIMÉ OPTIMISATION COMPLÈTE :
-~95-110 heures × 135 $/h = 12 825 $ - 14 850 $ CAD
-+ 300-450 $/mois d'apps Shopify
-
-⏱️ TIMELINE RÉALISTE :
-4-6 semaines en mode concentré
-2-3 mois en mode détendu
-
-🚀 READY TO LAUNCH :
-Après ce MVP, la boutique sera 100% opérationnelle et prête à générer des ventes.
+🚀 Stratégie :
+On lance vite (produits/collections/checkout), puis on active les modules qui augmentent la conversion quand il y a trafic et ventes.
 `;
