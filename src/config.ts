@@ -61,10 +61,10 @@ export const OFFER: OfferConfig = {
         { title: "Révision pages légales + Contact", hours: 1, complexity: "Faible", description: "Vérification et ajustements mineurs" },
       ],
     },
-    // ✅ Phase 5 — Incluse (Checkout & Retours light = test checkout uniquement)
+    // ✅ Phase 2 — Incluse (Checkout & Retours light = test checkout uniquement)
     {
-      id: 5,
-      name: "Phase 5 — Checkout optimisé (validation de base)",
+      id: 2,
+      name: "Phase 2 — Checkout optimisé (validation de base)",
       color: "#EF4444",
       backendNotes: [
         "Checkout Shopify déjà fonctionnel",
@@ -90,10 +90,10 @@ export const OFFER: OfferConfig = {
 // (Phases complètes déplacées + options 100-105 conservées)
 // ===============================
 export const ADDITIONAL_OPTIONS: Step[] = [
-  // 🔁 Phase 2 — déplacée telle quelle
+  // 🔁 Option — Filtres & Navigation intelligente
   {
-    id: 2,
-    name: "Phase 2 — Filtres & Navigation intelligente",
+    id: 3,
+    name: "Filtres & Navigation intelligente",
     color: "#10B981",
     backendNotes: [
       "Filtres catégorie/taille déjà présents mais non alimentés",
@@ -108,10 +108,10 @@ export const ADDITIONAL_OPTIONS: Step[] = [
       { title: "Optimisation recherche par mots-clés", hours: 2, complexity: "Faible", description: "Configuration Search & Discovery avec tags intelligents" },
     ],
   },
-  // 🔁 Phase 3 — déplacée telle quelle
+  // 🔁 Option — Mesures intelligentes (Kiwi Sizing)
   {
-    id: 3,
-    name: "Phase 3 — Mesures intelligentes (Kiwi Sizing)",
+    id: 4,
+    name: "Mesures intelligentes (Kiwi Sizing)",
     color: "#9333EA",
     backendNotes: [
       "Installation et intégration standard de Kiwi Sizing",
@@ -125,10 +125,10 @@ export const ADDITIONAL_OPTIONS: Step[] = [
       { title: "Page tutoriels et astuces mesures", hours: 2, complexity: "Faible", description: "Page d'aide avec guides visuels pour mesures" },
     ],
   },
-  // 🔁 Phase 4 — déplacée telle quelle
+  // 🔁 Option — Fidélité & Portail client (Growave)
   {
-    id: 4,
-    name: "Phase 4 — Fidélité & Portail client (Growave)",
+    id: 5,
+    name: "Fidélité & Portail client (Growave)",
     color: "#F59E0B",
     backendNotes: [
       "Installation Growave pour remplacer SE Wishlist actuel",
@@ -144,10 +144,10 @@ export const ADDITIONAL_OPTIONS: Step[] = [
       { title: "Magical Preorder pour membres", hours: 3, complexity: "Moyenne", description: "Configuration preorders exclusifs membres" },
     ],
   },
-  // 🔁 Phase 6 — déplacée telle quelle
+  // 🔁 Option — Email Marketing (Klaviyo)
   {
     id: 6,
-    name: "Phase 6 — Email Marketing (Klaviyo)",
+    name: "Email Marketing (Klaviyo)",
     color: "#EC4899",
     backendNotes: [
       "Popup newsletter déjà en place via Uppush",
@@ -163,10 +163,10 @@ export const ADDITIONAL_OPTIONS: Step[] = [
       { title: "Intégration formulaires ambassadrice/membre", hours: 2, complexity: "Faible", description: "Formulaires custom avec automation Klaviyo" },
     ],
   },
-  // 🔁 Phase 7 — déplacée telle quelle
+  // 🔁 Option — QA, Formation & Lancement
   {
     id: 7,
-    name: "Phase 7 — QA, Formation & Lancement",
+    name: "QA, Formation & Lancement",
     color: "#14B8A6",
     backendNotes: [
       "Tests complets du parcours client",
@@ -417,14 +417,14 @@ export const CONFIG_NOTES = `
 🎯 Portée de l'offre de base (incluse) :
 - Phase 0 : Audit + Import produits + Collections
 - Phase 1 : Pages structurantes (Home, About, FAQ light)
-- Phase 5 : Checkout (validation de base, sans apps payantes)
+- Phase 2 : Checkout (validation de base, sans apps payantes)
 
 📦 Extensions disponibles (en options) :
-- Phase 2 : Filtres & Navigation (prix, couleur, nouveautés, recherche)
-- Phase 3 : Mesures intelligentes (Kiwi Sizing)
-- Phase 4 : Fidélité & Portail client (Growave, Preorder)
-- Phase 6 : Email Marketing (Klaviyo, flows)
-- Phase 7 : QA avancée, formation et lancement encadré
+- Filtres & Navigation (prix, couleur, nouveautés, recherche)
+- Mesures intelligentes (Kiwi Sizing)
+- Fidélité & Portail client (Growave, Preorder)
+- Email Marketing (Klaviyo, flows)
+- QA avancée, formation et lancement encadré
 
 ✅ CE QUI EST DÉJÀ EN PLACE (CONSERVÉ) :
 - Thème Prestige v5.6.1 (excellent, performant, luxe)
