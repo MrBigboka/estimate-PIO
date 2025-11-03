@@ -22,7 +22,7 @@ export type Step = {
 
 export type OverviewFeature = {
   label: string;
-  icon: "Brain" | "Users" | "Trophy" | "TrendingUp" | "ArrowRight" | "Layout" | "Puzzle";
+  icon: "Brain" | "Users" | "Trophy" | "TrendingUp" | "ArrowRight" | "Layout" | "Puzzle" | "ShieldCheck" | "Ruler" | "ShoppingCart";
   color: string; // hex color like #0EA5E9
 };
 

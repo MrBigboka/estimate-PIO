@@ -47,7 +47,7 @@ export default function TimelineSection({
   const monthlyCostData = useMemo(() => {
     let runningMin = 0;
     let runningMax = 0;
-    return schedule.map((m) => {
+    return schedule.map((m: { name: string; percent: number }) => {
       const min = Math.round(totalCostMin * m.percent);
       const max = Math.round(totalCostMax * m.percent);
       runningMin += min;
@@ -64,7 +64,7 @@ export default function TimelineSection({
 
   const monthSteps = useMemo(() => {
     const stepsQueue = computedSteps.map((s) => ({ id: s.id, remaining: s.hoursMin }));
-    const allocations: { month: string; stepIds: number[] }[] = schedule.map((m) => ({ month: m.name, stepIds: [] }));
+    const allocations: { month: string; stepIds: number[] }[] = schedule.map((m: { name: string; percent: number }) => ({ month: m.name, stepIds: [] }));
     let stepIdx = 0;
     for (let mIdx = 0; mIdx < allocations.length; mIdx++) {
       let capacity = Math.max(0, Math.round(totalHoursMin * (schedule[mIdx]?.percent ?? 0)));
@@ -96,7 +96,7 @@ export default function TimelineSection({
   }, [schedule, totalHoursMin, computedSteps]);
 
   const timelineData = TIMELINE_DATA_VARIANTS[variant];
-  const hasRange = monthlyCostData.some((d) => d.min !== d.max);
+  const hasRange = monthlyCostData.some((d: { min: number; max: number }) => d.min !== d.max);
 
   const monthlyChartConfig: ChartConfig = hasRange
     ? {
@@ -153,7 +153,7 @@ export default function TimelineSection({
           Répartition des coûts par mois
         </h3>
         <div className="space-y-3">
-          {monthlyCostData.map((m, i) => {
+          {monthlyCostData.map((m: { month: string; min: number; max: number }, i: number) => {
             const ms = monthSteps.find((x) => x.month === m.month);
             return (
               <div

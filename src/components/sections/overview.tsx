@@ -11,6 +11,9 @@ import {
   ArrowRight,
   Layout,
   Puzzle,
+  ShieldCheck,
+  Ruler,
+  ShoppingCart,
 } from "lucide-react";
 import type { OverviewFeature } from "@/config";
 import { formatCurrency } from "@/utils";
@@ -48,6 +51,9 @@ export default function OverviewSection({
     ArrowRight,
     Layout,
     Puzzle,
+    ShieldCheck,
+    Ruler,
+    ShoppingCart,
   };
   return (
     <div className="space-y-8 transition-all duration-300 ease-out animate-in fade-in slide-in-from-bottom-2">
