@@ -295,6 +295,17 @@ export const ADDITIONAL_OPTIONS: Step[] = [
       { title: "Précommande membres (Magical Preorder)", hours: 3, complexity: "Moyenne", description: "Accès anticipé nouveautés." },
     ],
   },
+  {
+    id: 10,
+    name: "Intégration Coolify (retours)",
+    color: "#F97316",
+    backendNotes: ["Alternative/complément à Loop pour gestion retours simplifiée."],
+    subSteps: [
+      { title: "Installation Coolify", hours: 2, complexity: "Moyenne", description: "Setup de base et configuration." },
+      { title: "Configuration règles retours", hours: 2, complexity: "Moyenne", description: "Conditions, délais, options échange/remboursement." },
+      { title: "Coordination avec Loop (si applicable)", hours: 1, complexity: "Faible", description: "Sync entre systèmes si les deux sont utilisés." },
+    ],
+  },
 ];
 
 // ===============================
