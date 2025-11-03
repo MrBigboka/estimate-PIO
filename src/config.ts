@@ -1,6 +1,6 @@
 // Configuration MVP optimisée pour P.I.O — Shopify
 // Version LITE: offre de base = Collections + Merchandising + Checkout (phases 0,1,2)
-// Import produits déplacé en option. Les autres phases avancées (3,4,5,6,7) sont en options additionnelles.
+// Les phases avancées (3,4,5,6,7) sont en options additionnelles.
 
 import type { OfferConfig, Step } from "./config_old";
 
@@ -23,7 +23,7 @@ export const OFFER: OfferConfig = {
   conceptSummary: {
     name: "P.I.O — Optimisation & Mise en marché Shopify (Lite)",
     description:
-      "Mise en vente rapide basée sur l’existant : collections dynamiques, merchandising (Home/PDP/cartes produit) et validation du checkout. Import produits et modules avancés en options.",
+      "Mise en vente rapide basée sur l'existant : collections dynamiques, merchandising (Home/PDP/cartes produit) et validation du checkout. Modules avancés en options.",
   },
   steps: [
     // ✅ Phase 0 — Incluse
@@ -34,7 +34,6 @@ export const OFFER: OfferConfig = {
       backendNotes: [
         "Audit léger de l'existant (thème Prestige, pixels/analytics, apps actives, paramètres clés).",
         "Configuration/validation des collections de base et dynamiques.",
-        "Import/gestion des produits déplacé en option.",
       ],
       subSteps: [
         {
@@ -151,22 +150,6 @@ export const OFFER: OfferConfig = {
 // (Phases avancées + extras)
 // ===============================
 export const ADDITIONAL_OPTIONS: Step[] = [
-  // Import produits (demandé en option)
-  {
-    id: 106,
-    name: "Import produits (assisté)",
-    color: "#64748B",
-    backendNotes: [
-      "Import 15–25 produits avec photos, descriptifs, variantes, tags.",
-      "Fourni: template CSV et guide; inclut 1 round de correction.",
-    ],
-    subSteps: [
-      { title: "Template & mapping", hours: 1, complexity: "Faible", description: "Fichier modèle + conventions de tags." },
-      { title: "Import & vérifications", hours: 8, complexity: "Moyenne", description: "Import + contrôle visuel (prix/variants/images)." },
-      { title: "Corrections & cohérence", hours: 3, complexity: "Moyenne", description: "Ajustements sur un échantillon, uniformisation attributs." },
-    ],
-  },
-
   // 🔁 Option — Filtres & Navigation intelligente
   {
     id: 3,
@@ -255,9 +238,42 @@ export const ADDITIONAL_OPTIONS: Step[] = [
     ],
   },
 
-  // 🔁 Option — QA, Formation & Lancement
+  // 🔁 Option — Import & Configuration Produits
   {
     id: 7,
+    name: "Import & Configuration Produits",
+    color: "#F59E0B",
+    backendNotes: [
+      "Import assisté de 20-30 produits avec photos, descriptions, variantes et tags.",
+      "Optimisation SEO de base des fiches produits.",
+    ],
+    subSteps: [
+      { title: "Template & mapping produits", hours: 1, complexity: "Faible", description: "Fichier modèle CSV + conventions." },
+      { title: "Import & validation", hours: 6, complexity: "Moyenne", description: "Import produits + contrôle qualité." },
+      { title: "Optimisation fiches produits", hours: 4, complexity: "Moyenne", description: "SEO, descriptions, tags cohérents." },
+    ],
+  },
+
+  // 🔁 Option — Contenu & Copywriting
+  {
+    id: 8,
+    name: "Contenu & Copywriting",
+    color: "#8B5CF6",
+    backendNotes: [
+      "Rédaction/révision des textes clés du site.",
+      "Pages About, FAQ, Politiques.",
+      "Ton de marque cohérent.",
+    ],
+    subSteps: [
+      { title: "Page About & Histoire de marque", hours: 3, complexity: "Moyenne", description: "Storytelling et valeurs." },
+      { title: "FAQ & Politiques", hours: 2, complexity: "Faible", description: "Livraison, retours, garanties." },
+      { title: "Révision copywriting Home/Collections", hours: 3, complexity: "Moyenne", description: "Titres, CTA, descriptions." },
+    ],
+  },
+
+  // 🔁 Option — QA, Formation & Lancement
+  {
+    id: 9,
     name: "QA, Formation & Lancement",
     color: "#14B8A6",
     backendNotes: [

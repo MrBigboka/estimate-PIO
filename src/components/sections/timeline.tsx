@@ -40,7 +40,7 @@ export default function TimelineSection({
   totalHoursMin,
   computedSteps,
 }: TimelineSectionProps) {
-  const [variant, setVariant] = useState<"4m" | "6m" | "8m" | "12m">("6m");
+  const [variant, setVariant] = useState<"2m" | "3m" | "4m" | "6m" | "8m" | "12m">("3m");
 
   const schedule = PROJECT_SCHEDULE_VARIANTS[variant];
 
@@ -128,6 +128,8 @@ export default function TimelineSection({
         <h2 className="text-2xl font-bold text-gray-900">Calendrier et coûts</h2>
         <div className="inline-flex rounded-md shadow-sm overflow-hidden border">
           {([
+            { id: "2m", label: "2 mois" },
+            { id: "3m", label: "3 mois" },
             { id: "4m", label: "4 mois" },
             { id: "6m", label: "6 mois" },
             { id: "8m", label: "8 mois" },
@@ -138,7 +140,7 @@ export default function TimelineSection({
               onClick={() => setVariant(opt.id)}
               className={`px-3 py-1.5 text-sm font-medium transition-colors ${
                 variant === opt.id ? "bg-primary text-white" : "bg-white text-gray-700 hover:bg-gray-50"
-              } ${opt.id === "4m" ? "" : "border-l"}`}
+              } ${opt.id === "2m" ? "" : "border-l"}`}
               aria-pressed={variant === opt.id}
             >
               {opt.label}
