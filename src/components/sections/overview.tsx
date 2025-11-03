@@ -9,6 +9,8 @@ import {
   Code,
   TrendingUp,
   ArrowRight,
+  Layout,
+  Puzzle,
 } from "lucide-react";
 import type { OverviewFeature } from "@/config";
 import { formatCurrency } from "@/utils";
@@ -44,6 +46,8 @@ export default function OverviewSection({
     Trophy,
     TrendingUp,
     ArrowRight,
+    Layout,
+    Puzzle,
   };
   return (
     <div className="space-y-8 transition-all duration-300 ease-out animate-in fade-in slide-in-from-bottom-2">

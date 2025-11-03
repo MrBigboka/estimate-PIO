@@ -1,6 +1,6 @@
 // Configuration MVP optimisée pour P.I.O — Shopify
-// Version LITE: offre de base = Produits + Collections + Checkout (phases 0,1,5)
-// Les autres phases (2,3,4,6,7) sont déplacées en options additionnelles (mêmes IDs)
+// Version LITE: offre de base = Collections + Merchandising + Checkout (phases 0,1,2)
+// Import produits déplacé en option. Les autres phases avancées (3,4,5,6,7) sont en options additionnelles.
 
 import type { OfferConfig, Step } from "./config_old";
 
@@ -15,7 +15,7 @@ export const COMPLEXITY_SCORE: Record<"Faible" | "Moyenne" | "Élevée", number>
 };
 
 // ===============================
-// 🔹 OFFRE MVP — P.I.O (VERSION LITE)
+// 🔹 OFFRE MVP — P.I.O (VERSION LITE, ~26h)
 // ===============================
 export const OFFER: OfferConfig = {
   id: "pio-shopify-optimization-lite",
@@ -23,162 +23,251 @@ export const OFFER: OfferConfig = {
   conceptSummary: {
     name: "P.I.O — Optimisation & Mise en marché Shopify (Lite)",
     description:
-      "Offre de base centrée sur la mise en vente rapide : audit, import produits, collections dynamiques et validation du checkout. Toutes les autres fonctionnalités avancées sont proposées en options additionnelles.",
+      "Mise en vente rapide basée sur l’existant : collections dynamiques, merchandising (Home/PDP/cartes produit) et validation du checkout. Import produits et modules avancés en options.",
   },
   steps: [
     // ✅ Phase 0 — Incluse
     {
       id: 0,
-      name: "Phase 0 — Audit & Configuration produits",
+      name: "Phase 0 — Audit léger & Collections",
       color: "#6B7280",
       backendNotes: [
-        "Audit de l'existant (thème Prestige, analytics, apps déjà en place)",
-        "Import de 15-25 produits avec photos, descriptions, variantes",
-        "Configuration des collections de base",
-        "Note : Le store Shopify est déjà configuré (paiements, domaines, taxes OK)",
+        "Audit léger de l'existant (thème Prestige, pixels/analytics, apps actives, paramètres clés).",
+        "Configuration/validation des collections de base et dynamiques.",
+        "Import/gestion des produits déplacé en option.",
       ],
       subSteps: [
-        { title: "Audit technique de l'existant", hours: 3, complexity: "Faible", description: "Vérification de la configuration actuelle, apps installées, analytics" },
-        { title: "Import et configuration de 15-25 produits", hours: 12, complexity: "Moyenne", description: "Import produits avec photos, descriptions, prix, variantes, tags" },
-        { title: "Configuration collections de base", hours: 4, complexity: "Faible", description: "Création des collections New Arrivals, Best Picks, Essentials" },
+        {
+          title: "Audit technique (léger)",
+          hours: 3,
+          complexity: "Faible",
+          description: "Vérification rapide: thème, pixels (GTM/GA4/Meta), apps, devises/langues, taxes de base.",
+        },
+        {
+          title: "Collections dynamiques (New Arrivals / Best Picks / Essentials)",
+          hours: 4,
+          complexity: "Faible",
+          description: "Règles auto (tags/date), tri, affichage (Home & Shop).",
+        },
+        {
+          title: "Taxonomie & conventions de tags",
+          hours: 2,
+          complexity: "Faible",
+          description: "Schéma de tags (catégorie, état, saison, marque) pour préparer filtres/SEO.",
+        },
+        {
+          title: "Gabarits de collections (UX minimal)",
+          hours: 2,
+          complexity: "Faible",
+          description: "En-têtes/intro, tri visible, CTA vers catégories, état vide propre.",
+        },
       ],
     },
+
     // ✅ Phase 1 — Incluse
     {
       id: 1,
-      name: "Phase 1 — Pages structurantes optimisées",
+      name: "Phase 1 — Merchandising & Templates",
       color: "#2563EB",
       backendNotes: [
-        "Optimisation des pages existantes (Home, About déjà présentes)",
-        "Création FAQ (absente actuellement)",
-        "Amélioration storytelling About us",
-        "Pages politiques déjà OK, vérification contenu",
+        "Brancher les sections produits/collections sur Home.",
+        "Amélioration UX rapide: cartes produit & PDP (sans refonte).",
       ],
       subSteps: [
-        { title: "Optimisation Home + Hero + sections produits", hours: 4, complexity: "Faible", description: "Amélioration de la page d'accueil existante avec sections dynamiques" },
-        { title: "Refonte page About us (Storytelling + Fondatrice)", hours: 4, complexity: "Faible", description: "Enrichissement du contenu avec mission, valeurs, histoire authentique" },
-        { title: "Création page FAQ structurée", hours: 4, complexity: "Faible", description: "Nouvelle page FAQ avec sections aide, retours, mesures" },
-        { title: "Révision pages légales + Contact", hours: 1, complexity: "Faible", description: "Vérification et ajustements mineurs" },
+        {
+          title: "Home: branchement sections produits/collections",
+          hours: 3,
+          complexity: "Faible",
+          description: "Blocks dynamiques, vignettes, CTA vers Shop/Collections.",
+        },
+        {
+          title: "Cartes produit (UX rapide)",
+          hours: 2,
+          complexity: "Faible",
+          description: "Prix, badges (New/Best), état/stock, hover, liens clairs.",
+        },
+        {
+          title: "PDP checklist (sans refonte)",
+          hours: 3,
+          complexity: "Faible",
+          description: "Vérif: titre, prix, variantes (taille/couleur), galerie, policies visibles, sections clés.",
+        },
+        {
+          title: "Recherche: synonymes & état vide",
+          hours: 2,
+          complexity: "Faible",
+          description: "Mots-clés de base & message 'aucun résultat' avec suggestions.",
+        },
+        {
+          title: "Performance rapide (médias)",
+          hours: 2,
+          complexity: "Faible",
+          description: "Compression rapide/paramètres d’image + lazy où pertinent.",
+        },
       ],
     },
-    // ✅ Phase 2 — Incluse (Checkout & Retours light = test checkout uniquement)
+
+    // ✅ Phase 2 — Incluse
     {
       id: 2,
-      name: "Phase 2 — Checkout optimisé (validation de base)",
+      name: "Phase 2 — Checkout (validation de base)",
       color: "#EF4444",
       backendNotes: [
-        "Checkout Shopify déjà fonctionnel",
-        "Dans la version Lite : validation du flux sans apps payantes",
-        "Les intégrations Planet / Protect my Order / Parcel Panel / Loop sont en options",
+        "Flux Shopify standard validé de bout en bout.",
+        "Aucune app payante incluse (Planet/Protect/Parcel/Loop en options).",
       ],
       subSteps: [
-        { title: "Vérification du flux Checkout (panier → paiement)", hours: 2, complexity: "Faible", description: "Tests taxes, livraisons, confirmations email" },
-        { title: "Ajustements mineurs (libellés, liens politiques)", hours: 1, complexity: "Faible", description: "Rappels politiques, disclaimers et liens utiles" },
+        {
+          title: "Tests panier → paiement",
+          hours: 3,
+          complexity: "Faible",
+          description: "Taxes, livraisons, confirmations e-mail, multi-devises/langues.",
+        },
+        {
+          title: "Micro-ajustements de libellés (si requis)",
+          hours: 1,
+          complexity: "Faible",
+          description: "Libellés/CTA/links politiques au besoin (pas de refonte).",
+        },
+        {
+          title: "Sanity check commandes",
+          hours: 1,
+          complexity: "Faible",
+          description: "Commande test → suivi: e-mails, états, remboursements de test.",
+        },
       ],
     },
   ],
   overviewFeatures: [
-    { label: "Mise en marché rapide avec base existante", icon: "TrendingUp", color: "#2563EB" },
-    { label: "Produits + Collections + Checkout validés", icon: "ArrowRight", color: "#10B981" },
-    { label: "Aucun lock-in d’apps payantes", icon: "Brain", color: "#10B981" },
-    { label: "Extensions disponibles à la carte", icon: "Trophy", color: "#F59E0B" },
+    { label: "Collections dynamiques prêtes", icon: "TrendingUp", color: "#2563EB" },
+    { label: "Home & PDP alignés vente", icon: "Layout", color: "#10B981" },
+    { label: "Checkout validé de bout en bout", icon: "ArrowRight", color: "#EF4444" },
+    { label: "Sans lock-in d’apps, modules à la carte", icon: "Puzzle", color: "#F59E0B" },
   ],
 };
 
 // ===============================
 // 🔹 OPTIONS ADDITIONNELLES
-// (Phases complètes déplacées + options 100-105 conservées)
+// (Phases avancées + extras)
 // ===============================
 export const ADDITIONAL_OPTIONS: Step[] = [
+  // Import produits (demandé en option)
+  {
+    id: 106,
+    name: "Import produits (assisté)",
+    color: "#64748B",
+    backendNotes: [
+      "Import 15–25 produits avec photos, descriptifs, variantes, tags.",
+      "Fourni: template CSV et guide; inclut 1 round de correction.",
+    ],
+    subSteps: [
+      { title: "Template & mapping", hours: 1, complexity: "Faible", description: "Fichier modèle + conventions de tags." },
+      { title: "Import & vérifications", hours: 8, complexity: "Moyenne", description: "Import + contrôle visuel (prix/variants/images)." },
+      { title: "Corrections & cohérence", hours: 3, complexity: "Moyenne", description: "Ajustements sur un échantillon, uniformisation attributs." },
+    ],
+  },
+
   // 🔁 Option — Filtres & Navigation intelligente
   {
     id: 3,
     name: "Filtres & Navigation intelligente",
     color: "#10B981",
     backendNotes: [
-      "Filtres catégorie/taille déjà présents mais non alimentés",
-      "Ajout filtres prix, couleur, nouveautés",
-      "Configuration collections dynamiques automatiques",
-      "Utilisation Search & Discovery natif Shopify",
+      "Filtres catégorie/taille déjà présents mais non alimentés.",
+      "Ajout filtres prix, couleur, nouveautés.",
+      "Collections dynamiques automatiques élargies.",
+      "Utilisation Search & Discovery natif Shopify.",
     ],
     subSteps: [
-      { title: "Activation et optimisation filtres existants", hours: 3, complexity: "Faible", description: "Configuration des filtres par catégorie, taille, marque déjà en place" },
-      { title: "Ajout filtres avancés (prix, couleur, nouveautés)", hours: 4, complexity: "Moyenne", description: "Intégration de filtres supplémentaires multi-critères" },
-      { title: "Configuration collections dynamiques automatiques", hours: 3, complexity: "Faible", description: "Règles auto pour New Arrivals, Best Picks basées sur tags/dates" },
-      { title: "Optimisation recherche par mots-clés", hours: 2, complexity: "Faible", description: "Configuration Search & Discovery avec tags intelligents" },
+      { title: "Activation filtres existants", hours: 3, complexity: "Faible", description: "Catégorie, taille, marque alimentés via tags." },
+      { title: "Filtres avancés (prix, couleur, nouveautés)", hours: 4, complexity: "Moyenne", description: "Multi-critères + UX claire." },
+      { title: "Collections auto supplémentaires", hours: 3, complexity: "Faible", description: "Règles basées sur tags/dates/performance." },
+      { title: "Search & Discovery tuning", hours: 2, complexity: "Faible", description: "Synonymes étendus et boosting basique." },
     ],
   },
+
   // 🔁 Option — Mesures intelligentes (Kiwi Sizing)
   {
     id: 4,
     name: "Mesures intelligentes (Kiwi Sizing)",
     color: "#9333EA",
     backendNotes: [
-      "Installation et intégration standard de Kiwi Sizing",
-      "Tables de tailles dynamiques par catégorie",
-      "Page tutoriel mesures",
-      "Note : Configuration standard uniquement, customisation avancée en extra",
+      "Installation standard de Kiwi Sizing.",
+      "Tables de tailles dynamiques par catégorie.",
+      "Page tutoriel mesures.",
     ],
     subSteps: [
-      { title: "Installation et configuration Kiwi Sizing", hours: 4, complexity: "Moyenne", description: "Setup de base de l'app avec intégration dans pages produits" },
-      { title: "Tables de tailles dynamiques", hours: 3, complexity: "Moyenne", description: "Création tables responsive par catégorie (hauts, bas, robes, chaussures)" },
-      { title: "Page tutoriels et astuces mesures", hours: 2, complexity: "Faible", description: "Page d'aide avec guides visuels pour mesures" },
+      { title: "Installation Kiwi Sizing", hours: 4, complexity: "Moyenne", description: "Setup & intégration sur PDP." },
+      { title: "Tables de tailles dynamiques", hours: 3, complexity: "Moyenne", description: "Hauts/bas/robes/chaussures." },
+      { title: "Page tutoriels & astuces", hours: 2, complexity: "Faible", description: "Guides visuels et conseils." },
     ],
   },
+
   // 🔁 Option — Fidélité & Portail client (Growave)
   {
     id: 5,
     name: "Fidélité & Portail client (Growave)",
     color: "#F59E0B",
     backendNotes: [
-      "Installation Growave pour remplacer SE Wishlist actuel",
-      "Portail client avec favoris, points, préférences",
-      "La Voute basique (espace membre avec tags VIP)",
-      "Intégration Magical Preorder pour membres",
+      "Remplace SE Wishlist par Growave.",
+      "Favoris, points, préférences.",
+      "La Voute basique + Preorder membres.",
     ],
     subSteps: [
-      { title: "Installation et configuration Growave", hours: 4, complexity: "Moyenne", description: "Setup app, migration wishlist SE vers Growave" },
-      { title: "Portail client (favoris, infos, préférences)", hours: 5, complexity: "Moyenne", description: "Configuration du portail client personnalisé" },
-      { title: "Système points de fidélité + économies", hours: 4, complexity: "Moyenne", description: "Setup règles de points et affichage économies panier" },
-      { title: "La Voute (espace membre basique)", hours: 4, complexity: "Moyenne", description: "Espace VIP avec tags membres et prix exclusifs" },
-      { title: "Magical Preorder pour membres", hours: 3, complexity: "Moyenne", description: "Configuration preorders exclusifs membres" },
+      { title: "Installation & migration wishlist", hours: 4, complexity: "Moyenne", description: "Setup Growave + reprise favoris." },
+      { title: "Portail client", hours: 5, complexity: "Moyenne", description: "Infos, favoris, préférences." },
+      { title: "Points & économies", hours: 4, complexity: "Moyenne", description: "Règles points + affichage économies panier." },
+      { title: "La Voute (basique)", hours: 4, complexity: "Moyenne", description: "Tags VIP, prix exclusifs." },
+      { title: "Preorder (membres)", hours: 3, complexity: "Moyenne", description: "Magical Preorder pour VIP." },
     ],
   },
+
+  // 🔁 Option — Checkout & Retours (apps)
+  {
+    id: 5_1,
+    name: "Checkout & Retours (apps)",
+    color: "#EF4444",
+    backendNotes: [
+      "Planet + Protect my Order + Parcel Panel.",
+      "Loop pour retours automatisés.",
+    ],
+    subSteps: [
+      { title: "Planet + Protect my Order", hours: 3, complexity: "Faible", description: "Ajout et configuration dans le flux checkout." },
+      { title: "Parcel Panel (tracking)", hours: 2, complexity: "Faible", description: "Tracking personnalisé post-commande." },
+      { title: "Loop (retours automatisés)", hours: 5, complexity: "Moyenne", description: "Portail de retours complet." },
+    ],
+  },
+
   // 🔁 Option — Email Marketing (Klaviyo)
   {
     id: 6,
     name: "Email Marketing (Klaviyo)",
     color: "#EC4899",
     backendNotes: [
-      "Popup newsletter déjà en place via Uppush",
-      "Installation Klaviyo pour automatisations",
-      "Séquences essentielles : Bienvenue, Abandon panier, Post-achat",
-      "Migration des emails collectés",
+      "Installation Klaviyo & flows essentiels.",
     ],
     subSteps: [
-      { title: "Installation et configuration Klaviyo", hours: 3, complexity: "Moyenne", description: "Setup de base, connexion Shopify, migration emails" },
-      { title: "Séquence Bienvenue (Welcome series)", hours: 2, complexity: "Faible", description: "Flow d'onboarding pour nouveaux abonnés" },
-      { title: "Séquence Abandon panier", hours: 2, complexity: "Faible", description: "Flow de récupération des paniers abandonnés" },
-      { title: "Séquence Post-achat + Demande avis", hours: 2, complexity: "Faible", description: "Flow de suivi après commande" },
-      { title: "Intégration formulaires ambassadrice/membre", hours: 2, complexity: "Faible", description: "Formulaires custom avec automation Klaviyo" },
+      { title: "Setup Klaviyo & connexion Shopify", hours: 3, complexity: "Moyenne", description: "Migration emails si besoin." },
+      { title: "Welcome series", hours: 2, complexity: "Faible", description: "Onboarding nouveaux abonnés." },
+      { title: "Abandon panier", hours: 2, complexity: "Faible", description: "Récupération paniers." },
+      { title: "Post-achat + Avis", hours: 2, complexity: "Faible", description: "Suivi satisfaction & UGC." },
+      { title: "Formulaires (membre/ambassadeur)", hours: 2, complexity: "Faible", description: "Forms + automatisations." },
     ],
   },
+
   // 🔁 Option — QA, Formation & Lancement
   {
     id: 7,
     name: "QA, Formation & Lancement",
     color: "#14B8A6",
     backendNotes: [
-      "Tests complets du parcours client",
-      "Recette client (UAT) sur 5 jours",
-      "Formation administration Shopify",
-      "Support post-lancement 1 semaine",
+      "Tests complets du parcours client, UAT 5 jours, formation admin, support 1 semaine.",
     ],
     subSteps: [
-      { title: "Tests internes complets", hours: 4, complexity: "Moyenne", description: "Tests techniques sur navigateurs desktop/mobile" },
-      { title: "Phase de recette client (UAT) + corrections", hours: 6, complexity: "Moyenne", description: "Période de tests client et corrections bugs mineurs" },
-      { title: "Formation Shopify admin", hours: 2, complexity: "Faible", description: "Session formation gestion produits, commandes, apps" },
-      { title: "Lancement + support post-prod", hours: 3, complexity: "Faible", description: "Déploiement et corrections critiques première semaine" },
+      { title: "Tests internes complets", hours: 4, complexity: "Moyenne", description: "Desktop/mobile, navigateurs majeurs." },
+      { title: "UAT + corrections", hours: 6, complexity: "Moyenne", description: "Feedback client et correctifs mineurs." },
+      { title: "Formation Shopify admin", hours: 2, complexity: "Faible", description: "Produits, commandes, apps." },
+      { title: "Lancement + support", hours: 3, complexity: "Faible", description: "Go-live & bugfix critiques S1." },
     ],
   },
 
@@ -190,11 +279,11 @@ export const ADDITIONAL_OPTIONS: Step[] = [
     disableMaxMultiplier: true,
     backendNotes: [
       "SEO Store AI pour métas automatiques",
-      "Botika pour génération photos AI",
-      "Vitals pour monitoring performance",
+      "Botika (photos AI)",
+      "Vitals (monitoring)",
     ],
     subSteps: [
-      { title: "SEO Store AI + Botika + Vitals", hours: 12, complexity: "Moyenne", description: "Pack complet SEO AI, photos AI et monitoring performance" },
+      { title: "SEO Store AI + Botika + Vitals", hours: 12, complexity: "Moyenne", description: "Pack complet SEO AI, photos AI et monitoring performance." },
     ],
   },
   {
@@ -203,24 +292,22 @@ export const ADDITIONAL_OPTIONS: Step[] = [
     color: "#7C3AED",
     disableMaxMultiplier: true,
     backendNotes: [
-      "Upgrade de La Voute basique vers expérience premium",
-      "Contenu exclusif, événements, early access produits",
+      "Calendrier événements, early access produits.",
     ],
     subSteps: [
-      { title: "La Voute Premium + Contenu exclusif", hours: 8, complexity: "Élevée", description: "Portail membre premium avec calendrier événements et early access" },
+      { title: "La Voute Premium + Contenu exclusif", hours: 8, complexity: "Élevée", description: "Espace premium pour VIP." },
     ],
   },
   {
     id: 102,
-    name: "Intégration Coolify (en complément de Loop)",
+    name: "Intégration Coolify (complément Loop)",
     color: "#F97316",
     disableMaxMultiplier: true,
     backendNotes: [
-      "Ajout Coolify pour compléter Loop",
-      "Coordination entre deux plateformes de retours",
+      "Coordination entre deux plateformes de retours.",
     ],
     subSteps: [
-      { title: "Installation et coordination Coolify + Loop", hours: 5, complexity: "Moyenne", description: "Configuration Coolify et sync avec Loop existant" },
+      { title: "Coolify + Loop", hours: 5, complexity: "Moyenne", description: "Setup & synchronisation." },
     ],
   },
   {
@@ -228,9 +315,9 @@ export const ADDITIONAL_OPTIONS: Step[] = [
     name: "Lookbook Vidéo",
     color: "#8B5CF6",
     disableMaxMultiplier: true,
-    backendNotes: ["Page Lookbook avec vidéos interactives"],
+    backendNotes: ["Page Lookbook vidéo immersive."],
     subSteps: [
-      { title: "Page Lookbook + vidéos interactives", hours: 10, complexity: "Moyenne", description: "Création page Lookbook vidéo immersive" },
+      { title: "Page Lookbook + vidéos", hours: 10, complexity: "Moyenne", description: "Narratif visuel & sections épurées." },
     ],
   },
   {
@@ -238,9 +325,9 @@ export const ADDITIONAL_OPTIONS: Step[] = [
     name: "Assistant AI produit",
     color: "#10B981",
     disableMaxMultiplier: true,
-    backendNotes: ["Assistant OpenAI pour suggestions produits et tailles"],
+    backendNotes: ["Assistant OpenAI pour suggestions produits/tailles."],
     subSteps: [
-      { title: "Chat AI produit et suggestions taille", hours: 16, complexity: "Élevée", description: "Intégration assistant AI dans le store" },
+      { title: "Chat AI produit", hours: 16, complexity: "Élevée", description: "Guidage achat & tailles." },
     ],
   },
   {
@@ -248,15 +335,15 @@ export const ADDITIONAL_OPTIONS: Step[] = [
     name: "Essayage virtuel (AI Fit)",
     color: "#EF4444",
     disableMaxMultiplier: true,
-    backendNotes: ["Module d'essayage virtuel 3D via Botika ou Vue.ai"],
+    backendNotes: ["Botika/Vue.ai"],
     subSteps: [
-      { title: "Module essayage virtuel AI", hours: 24, complexity: "Élevée", description: "Intégration système d'essayage AI 3D sur mannequin" },
+      { title: "Module essayage virtuel", hours: 24, complexity: "Élevée", description: "Intégration 3D mannequin." },
     ],
   },
 ];
 
 // ===============================
-// 🔹 MÉTRIQUES ET TIMELINE
+// 🔹 MÉTRIQUES & TIMELINE
 // ===============================
 export const COST_PER_HOUR = 135;
 export const HOURS_MAX_MULTIPLIER = 1.15;
@@ -264,47 +351,34 @@ export const SIGN_LINK = "";
 
 // Note sur les frais d'abonnements
 export const MONTHLY_APP_COSTS_NOTE = `
-💳 FRAIS D'ABONNEMENTS MENSUELS (non inclus dans l'estimation)
-
-Cette estimation couvre le développement et l'intégration. Budget mensuel additionnel 
-requis pour les applications Shopify (si options activées) : 300-450 CAD/mois
-
-Apps principales (si choisies) :
-- Growave (fidélité & portail client) : ~150-200 CAD/mois
-- Loop (retours automatisés) : ~80 CAD/mois  
-- Kiwi Sizing (mesures intelligentes) : ~40 CAD/mois
-- Klaviyo (email marketing) : ~60-80 CAD/mois (selon volume emails)
-- Apps secondaires (Planet, Protect my Order, Parcel Panel) : ~30-50 CAD/mois
-
-Apps déjà en place conservées :
-- Uppush, SE Wishlist, Instafeed : peuvent être retirées après migration
-- Analytics (GA4, Meta Pixel, etc.) : déjà configurés, aucun coût additionnel
-
-*Estimation basée sur les plans nécessaires pour ce niveau de personnalisation.
-Les coûts réels varient selon le volume de commandes et fonctionnalités activées.
+💳 FRAIS D'ABONNEMENTS (si options activées) — 300–450 CAD/mois (ordre de grandeur)
+- Growave : ~150–200
+- Loop : ~80
+- Kiwi Sizing : ~40
+- Klaviyo : ~60–80 (selon volume)
+- Planet / Protect / Parcel Panel : ~30–50
 `;
 
+// Planning simple (si besoin d’affichage)
 export const PROJECT_SCHEDULE = [
-  { name: "Semaines 1-2", percent: 0.25 },
-  { name: "Semaines 3-4", percent: 0.30 },
-  { name: "Semaines 5-6", percent: 0.25 },
-  { name: "Semaines 7-8", percent: 0.20 },
+  { name: "Semaines 1-2", percent: 0.30 },
+  { name: "Semaines 3-4", percent: 0.35 },
+  { name: "Semaines 5-6", percent: 0.20 },
+  { name: "Semaines 7-8", percent: 0.15 },
 ];
 
 export const TIMELINE_DATA = [
-  { month: "Semaine 1", planning: 40, development: 10, testing: 0, deployment: 0 },
-  { month: "Semaine 2", planning: 70, development: 30, testing: 5, deployment: 0 },
-  { month: "Semaine 3", planning: 90, development: 50, testing: 15, deployment: 0 },
-  { month: "Semaine 4", planning: 100, development: 70, testing: 30, deployment: 10 },
-  { month: "Semaine 5", planning: 100, development: 85, testing: 50, deployment: 25 },
-  { month: "Semaine 6", planning: 100, development: 95, testing: 75, deployment: 50 },
-  { month: "Semaine 7", planning: 100, development: 100, testing: 90, deployment: 75 },
+  { month: "Semaine 1", planning: 40, development: 15, testing: 0, deployment: 0 },
+  { month: "Semaine 2", planning: 80, development: 35, testing: 5, deployment: 0 },
+  { month: "Semaine 3", planning: 100, development: 60, testing: 15, deployment: 0 },
+  { month: "Semaine 4", planning: 100, development: 80, testing: 30, deployment: 10 },
+  { month: "Semaine 5", planning: 100, development: 90, testing: 55, deployment: 25 },
+  { month: "Semaine 6", planning: 100, development: 100, testing: 75, deployment: 45 },
+  { month: "Semaine 7", planning: 100, development: 100, testing: 90, deployment: 70 },
   { month: "Semaine 8", planning: 100, development: 100, testing: 100, deployment: 100 },
 ];
 
-// ===============================
-// 🔹 VARIANTES TIMELINE
-// ===============================
+// Variantes de planning (inchangées)
 export const PROJECT_SCHEDULE_VARIANTS: Record<string, { name: string; percent: number }[]> = {
   "2m": [
     { name: "Mois 1", percent: 0.6 },
@@ -412,32 +486,14 @@ export const TIMELINE_DATA_VARIANTS: Record<
 // 🔹 NOTES DE CONFIGURATION
 // ===============================
 export const CONFIG_NOTES = `
-📝 NOTES IMPORTANTES — VERSION LITE
+📝 NOTES IMPORTANTES — VERSION LITE (20–30h visées, ~26h estimées)
+- Focus: Collections dynamiques + merchandising (Home/PDP/cartes) + checkout validé.
+- Import produits est en option (id: 106). Si la cliente ajoute elle-même les produits, on garde la portée basse.
+- Tout le reste (filtres avancés, fidélité, retours Loop, Klaviyo…) est à la carte.
 
-🎯 Portée de l'offre de base (incluse) :
-- Phase 0 : Audit + Import produits + Collections
-- Phase 1 : Pages structurantes (Home, About, FAQ light)
-- Phase 2 : Checkout (validation de base, sans apps payantes)
+💰 Ordre de grandeur:
+~26 h × 135 $/h ≈ 3 510 $ CAD (hors apps). Plage cible: 20–30 h selon ajustements.
 
-📦 Extensions disponibles (en options) :
-- Filtres & Navigation (prix, couleur, nouveautés, recherche)
-- Mesures intelligentes (Kiwi Sizing)
-- Fidélité & Portail client (Growave, Preorder)
-- Email Marketing (Klaviyo, flows)
-- QA avancée, formation et lancement encadré
-
-✅ CE QUI EST DÉJÀ EN PLACE (CONSERVÉ) :
-- Thème Prestige v5.6.1 (excellent, performant, luxe)
-- Analytics complets (GA4, GTM, Meta Pixel, TikTok, Snapchat)
-- Multi-langues (FR/EN) et multi-devises (CAD/USD)
-- Paiements configurés (Shop Pay, PayPal, Apple/Google Pay, cartes)
-- Infrastructure technique solide (CDN, PWA, RGPD, légal)
-- Shopify Chat/Inbox actif
-
-💰 ESTIMATION LITE (ordre de grandeur) :
-~20 h × 135 $/h ≈ 2 700 $ CAD (selon volume produits)
-Les extensions sont chiffrées à la carte.
-
-🚀 Stratégie :
-On lance vite (produits/collections/checkout), puis on active les modules qui augmentent la conversion quand il y a trafic et ventes.
+🚀 Stratégie:
+Lancer vite avec l’essentiel pour vendre; activer les modules qui augmentent la conversion une fois le trafic présent.
 `;
